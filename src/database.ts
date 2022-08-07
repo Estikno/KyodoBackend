@@ -3,6 +3,7 @@ import config from './config';
 
 export async function connectDB() {
     try{
+        //TODO: Add to the config the user and password for the mongo db
         const options: ConnectOptions = {
             /* user: config.MONGO_USER,
             pass: config.MONGO_PASSWORD */

@@ -1,10 +1,46 @@
 import {Request, Response} from 'express';
 import User, {IUser} from '../models/User';
 
+/**
+ * Get all users
+ */
 export async function getUsers(req: Request, res: Response): Promise<Response> {
     return res.json(await User.find());
 }
 
+/**
+ * Get user by id or username
+ * * Need this structure in the body: {type: 'id' || 'username'}
+ */
+export async function getUser(req: Request, res: Response): Promise<Response> {
+    if(!req.body.type) return res.status(400).json({message: 'The type of search has not been said in the body'});
+    
+    if(req.body.type !== 'id' && req.body.type !== 'username') return res.status(400).json({message: 'Invalid type of search'});
+
+    if(req.body.type === 'id'){
+        const foundUser = await User.findById(req.params.id);
+
+        if(foundUser){
+            return res.json(foundUser);
+        }
+        
+        return res.status(404).json({message: 'User not found'});
+    }
+    else{
+        const foundUser = await User.findOne({username: req.params.id});
+
+        if(foundUser){
+            return res.json(foundUser);
+        }
+
+        return res.status(404).json({message: 'User not found'});
+    }
+}
+
+/**
+ * Create a new user
+ * * Need the IUser structure to create a new user, also found in the model script (This goes in the request body)
+ */
 export async function createUser(req: Request, res: Response): Promise<Response> {
     if(!req.body.email || !req.body.username || !req.body.password) {
         return res.status(400).json({
@@ -25,4 +61,59 @@ export async function createUser(req: Request, res: Response): Promise<Response>
     await newUser.save();
 
     return res.status(201).json(newUser);
+}
+
+/**
+ * Delete a user by id or username
+ * * Need this structure in the body: {type: 'id' || 'username'}
+ */
+export async function deleteUser(req: Request, res: Response): Promise<Response> {
+    if(!req.body.type) return res.status(400).json({message: 'The type of search has not been said in the body'});
+    
+    if(req.body.type !== 'id' && req.body.type !== 'username') return res.status(400).json({message: 'Invalid type of search'});
+
+    if(req.body.type === 'id'){
+        let user = null;
+        
+        try{
+            user = await User.findByIdAndDelete(req.params.id);
+        }
+        catch (err) {
+            return res.status(500).json({message: 'Internal server error, error: ' + err});
+        }
+
+        if(!user) return res.status(404).json({message: 'User not found'});
+
+        return res.json(user);
+    }
+    else{
+        let user = null;
+        
+        try{
+            user = await User.findOneAndDelete({username: req.params.id});
+        }
+        catch (err) {
+            return res.status(500).json({message: 'Internal server error, error: ' + err});
+        }
+
+        if(!user) return res.status(404).json({message: 'User not found'});
+
+        return res.json(user);
+    }
+}
+
+/**
+ * Update a user by id or username
+ * ! This is not implemented yet and also not tested
+ */
+export async function updateUser(req: Request, res: Response): Promise<Response> {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
+
+    if(!user) {
+        return res.status(404).json({
+            message: 'User not found'
+        });
+    }
+
+    return res.json(user);
 }

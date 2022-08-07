@@ -7,15 +7,16 @@ import config from './config';
 import userRouter from './routes/user.routes';
 
 class App {
-  private app: Application;
+  private app: Application; //! Do not give public access to the app object
 
+  //TODO: Call all the config and routes methods, and also make that methods private
   constructor() {
     this.app = express();
     /*this.config();
     this.routes();*/
   }
 
-  config(): void {
+  public config(): void {
     this.app.set('port', config.PORT);
     this.app.use(morgan('dev'));
     this.app.use(cors());
@@ -23,11 +24,12 @@ class App {
     this.app.use(express.urlencoded({ extended: false }));
   }
 
-  routes(): void {
+  //* Impotant to add the routes here, otherwise the routes will not be available, and also set the prefix for the routes
+  public routes(): void {
     this.app.use('/user', userRouter);
   }
 
-  listen(): void {
+  public listen(): void {
     this.app.listen(this.app.get('port'), () => {
       console.log('Server on port', this.app.get('port'));
     }

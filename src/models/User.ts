@@ -31,7 +31,10 @@ const userSchema = new Schema({
     versionKey: false
 });
 
-//excecutes when a new value is set on the table
+/**
+ * Excecutes when a new value is set on the table, is secures the password
+ * TODO: Move this function to another script and call it from here
+ */
 userSchema.pre<IUser>('save', async function(next) {
     const user = this;
 
@@ -48,7 +51,10 @@ userSchema.pre<IUser>('save', async function(next) {
     next();
 });
 
-//compare the password with the hashed one and return true or false if they match
+/**
+ * Compare the password with the hashed one and return true or false if they match
+ * TODO: Move this function to another script and call it from here
+ */
 userSchema.methods.comparePassword = async function(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
 }
