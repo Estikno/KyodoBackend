@@ -5,6 +5,7 @@ import config from './config';
 
 //routes
 import userRouter from './routes/user.routes';
+import roomTypeRouter from './routes/roomType.routes';
 
 class App {
   private app: Application; //! Do not give public access to the app object
@@ -27,6 +28,7 @@ class App {
   //* Impotant to add the routes here, otherwise the routes will not be available, and also set the prefix for the routes
   public routes(): void {
     this.app.use('/user', userRouter);
+    this.app.use('/roomType', roomTypeRouter);
   }
 
   public listen(): void {
