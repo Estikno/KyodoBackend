@@ -6,6 +6,7 @@ import config from './config';
 //routes
 import userRouter from './routes/user.routes';
 import roomTypeRouter from './routes/roomType.routes';
+import authRouter from './routes/auth.routes'
 
 class App {
   private app: Application; //! Do not give public access to the app object
@@ -29,6 +30,7 @@ class App {
   public routes(): void {
     this.app.use('/user', userRouter);
     this.app.use('/roomType', roomTypeRouter);
+    this.app.use('/auth', authRouter);
   }
 
   public listen(): void {

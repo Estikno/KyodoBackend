@@ -9,15 +9,19 @@ export interface IUser extends Document {
 }
 
 const userSchema = new Schema({
+    //set the username min length to 3 and max length to 20
     username: {
         type: String,
         required: true,
         unique: true,
         trim: true,
+        minlength: 3,
+        maxlength: 20
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        minlength: 8
     },
     email: {
         type: String,
@@ -25,6 +29,14 @@ const userSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true
+    },
+    isAvatarImageSet: {
+        type: Boolean,
+        default: false
+    },
+    avatarImage: {
+        type: String,
+        default: ""
     }
 },
 {

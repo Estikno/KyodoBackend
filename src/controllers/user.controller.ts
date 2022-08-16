@@ -40,6 +40,7 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
 /**
  * Create a new user
  * * Need the IUser structure to create a new user, also found in the model script (This goes in the request body)
+ * ! This function is deprecated, use the register function in the auth controller instead
  */
 export async function createUser(req: Request, res: Response): Promise<Response> {
     if(!req.body.email || !req.body.username || !req.body.password) {
