@@ -30,6 +30,35 @@ export async function register(req: Request, res: Response): Promise<Response> {
     return res.json({message: 'User created', status: true, user: newUser});
 }
 
-/*export async function login(req: Request, res: Response): Promise<Response> {
-       
-}*/
+export async function login(req: Request, res: Response): Promise<Response> {
+    const {username, password} = req.body;
+
+    if(!username || !password) {
+        return res.json({
+            message: 'Missing fields',
+            status: false
+        });
+    }
+
+    const userCheck = await User.findOne({username: username});
+
+    if(!userCheck) {
+        return res.json({
+            message: 'Incorrect username or password',
+            status: false
+        });
+    }
+
+    const isPasswordCorrect = await userCheck.comparePassword(password);
+
+    if(!isPasswordCorrect){
+        return res.json({
+            message: 'Incorrect username or password',
+            status: false
+        });
+    }
+    
+    const loggedUser = {...userCheck, password: undefined};
+
+    return res.json({message: 'Logged in', status: true, user: userCheck});
+}
