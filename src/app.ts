@@ -7,6 +7,7 @@ import config from './config';
 import userRouter from './routes/user.routes';
 import roomTypeRouter from './routes/roomType.routes';
 import authRouter from './routes/auth.routes'
+import profileRouter from './routes/profile.routes';
 
 class App {
   private app: Application; //! Do not give public access to the app object
@@ -23,6 +24,13 @@ class App {
     this.app.use(morgan('dev'));
     this.app.use(cors());
     this.app.use(express.json());
+
+    //! Use this middleware to upload files only on the necessary routes that need it
+    /*this.app.use(fileUpload({
+      useTempFiles: true,
+      tempFileDir: './uploads'
+    }));*/
+    
     this.app.use(express.urlencoded({ extended: false }));
   }
 
@@ -31,6 +39,7 @@ class App {
     this.app.use('/user', userRouter);
     this.app.use('/roomType', roomTypeRouter);
     this.app.use('/auth', authRouter);
+    this.app.use('/profile', profileRouter);
   }
 
   public listen(): void {

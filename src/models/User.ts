@@ -5,6 +5,17 @@ export interface IUser extends Document {
     username: string;
     password: string;
     email: string;
+    avatarImage: {
+        isAvatarImageSet: {
+            type: Boolean
+        },
+        avatarImageUrl: {
+            type: String
+        },
+        avatarImagePublicId: {
+            type: String
+        }
+    }
     comparePassword(password: string): Promise<boolean>;
 }
 
@@ -30,13 +41,19 @@ const userSchema = new Schema({
         lowercase: true,
         trim: true
     },
-    isAvatarImageSet: {
-        type: Boolean,
-        default: false
-    },
     avatarImage: {
-        type: String,
-        default: ""
+        isAvatarImageSet: {
+            type: Boolean,
+            default: false
+        },
+        avatarImageUrl: {
+            type: String,
+            default: ""
+        },
+        avatarImagePublicId: {
+            type: String,
+            default: ""
+        }
     }
 },
 {

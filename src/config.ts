@@ -11,5 +11,8 @@ export default {
     MONGO_USER: process.env.MONGO_USER || 'admin',
     MONGO_PASSWORD: process.env.MONGO_PASSWORD || 'admin',
     MONGO_HOST: process.env.MONGO_HOST || 'localhost',
-    PORT: process.env.PORT || 4758
+    PORT: process.env.PORT || 4758,
+    CLOUD_NAME: process.env.CLOUD_NAME,
+    API_KEY: process.env.CLOUD_API_KEY,
+    API_SECRET: process.env.CLOUD_API_SECRET
 }

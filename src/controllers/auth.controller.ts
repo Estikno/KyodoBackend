@@ -30,6 +30,9 @@ export async function register(req: Request, res: Response): Promise<Response> {
     return res.json({message: 'User created', status: true, user: newUser});
 }
 
+/**
+ * This function logs the user in and returns the user if the credentials are correct
+ */
 export async function login(req: Request, res: Response): Promise<Response> {
     const {username, password} = req.body;
 
