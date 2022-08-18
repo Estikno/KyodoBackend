@@ -22,7 +22,7 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
     const foundUser = await User.findById(req.params.id);
 
     if (foundUser) {
-        return res.json({foundUser, status: true});
+        return res.json({user: foundUser, status: true});
     }
 
     return res.json({ message: "User not found" , status: false});

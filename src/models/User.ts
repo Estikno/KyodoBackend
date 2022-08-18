@@ -6,15 +6,9 @@ export interface IUser extends Document {
     password: string;
     email: string;
     avatarImage: {
-        isAvatarImageSet: {
-            type: Boolean
-        },
-        avatarImageUrl: {
-            type: String
-        },
-        avatarImagePublicId: {
-            type: String
-        }
+        isAvatarImageSet: boolean;
+        avatarImageUrl: string;
+        avatarImagePublicId: string;
     }
     comparePassword(password: string): Promise<boolean>;
 }

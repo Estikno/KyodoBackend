@@ -16,7 +16,9 @@ export async function changeAvatar(
         return res.json({message: "No user id provided", status: false});
     }
 
-    if(!(await User.findById(req.params.id))){
+    const beforeUser = await User.findById(req.params.id);
+
+    if(!beforeUser){
         return res.json({message: "User not found", status: false});
     }
 
@@ -31,12 +33,14 @@ export async function changeAvatar(
         gravity: "auto",
         opacity: 100,
         radius: "max",
-        width: 400,
+        width: 300,
         crop: "fill",
         format: "png"
     };
     const result = await uploadImage(image.tempFilePath, options);
     await fs.unlink(image.tempFilePath);
+
+    await deleteImage(beforeUser.avatarImage.avatarImagePublicId);
 
     const updadedUser = await User.findByIdAndUpdate(req.params.id, {avatarImage: {
         isAvatarImageSet: true,
