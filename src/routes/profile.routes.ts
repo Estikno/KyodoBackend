@@ -1,6 +1,6 @@
-import {Router} from 'express';
-import fileUpload from 'express-fileupload';
-import * as profileController from '../controllers/profile.controller';
+import { Router } from "express";
+import fileUpload from "express-fileupload";
+import * as profileController from "../controllers/profile.controller";
 
 const router = Router();
 
@@ -9,9 +9,15 @@ const router = Router();
  * !Do not create the functions here, create them in the controller file
  */
 
-router.post('/avatar/:id', fileUpload({
-    useTempFiles: true,
-    tempFileDir: './uploads'
-  }), profileController.changeAvatar);
+router.post(
+    "/avatar/:id",
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir: "./uploads",
+    }),
+    profileController.changeAvatar
+);
+
+router.post("/password/:id", profileController.changePassword);
 
 export default router;

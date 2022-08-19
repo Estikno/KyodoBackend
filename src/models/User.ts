@@ -25,8 +25,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
-        minlength: 8
+        required: true
     },
     email: {
         type: String,
@@ -74,6 +73,13 @@ userSchema.pre<IUser>('save', async function(next) {
 
     next();
 });
+
+userSchema.methods.hashPassword = async function(): Promise<void> {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(this.password, salt);
+
+    this.password = hash;
+}
 
 /**
  * Compare the password with the hashed one and return true or false if they match

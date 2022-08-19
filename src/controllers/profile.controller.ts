@@ -4,10 +4,8 @@ import fs from "fs-extra";
 import { UploadedFile } from "express-fileupload";
 import { UploadApiOptions } from "cloudinary";
 import User from '../models/User';
+import {CChangePassword} from '../interfaces/IUsersInterfaces';
 
-/**
- * TODO: Add the image url to the database
- */
 export async function changeAvatar(
     req: Request,
     res: Response
@@ -40,7 +38,9 @@ export async function changeAvatar(
     const result = await uploadImage(image.tempFilePath, options);
     await fs.unlink(image.tempFilePath);
 
-    await deleteImage(beforeUser.avatarImage.avatarImagePublicId);
+    if(beforeUser.avatarImage.isAvatarImageSet){
+        await deleteImage(beforeUser.avatarImage.avatarImagePublicId);
+    }
 
     const updadedUser = await User.findByIdAndUpdate(req.params.id, {avatarImage: {
         isAvatarImageSet: true,
@@ -50,8 +50,40 @@ export async function changeAvatar(
 
     return res.json({
         result,
-        message: "Image uploaded successfully",
+        message: "Image uploaded successfully. Reload the page to see the changes",
         status: true,
         user: updadedUser
     });
+}
+
+export async function changePassword(req: Request, res: Response): Promise<Response> {
+    const passwords = req.body as CChangePassword;
+
+    if (!passwords.oldPassword || !passwords.newPassword) {
+        return res.json({
+            message: "Missing passwords",
+            status: false
+        });
+    }
+
+    const founduser = await User.findById(req.params.id);
+
+    if (!founduser) {
+        return res.json({
+            message: "User not found",
+            status: false
+        });
+    }
+
+    if(!await founduser.comparePassword(passwords.oldPassword)){
+        return res.json({
+            message: "Old password is incorrect",
+            status: false
+        });
+    }
+
+    founduser.password = passwords.newPassword;
+    const user = await founduser.save();
+
+    return res.json({user, status: true, message: "Password changed"});
 }
