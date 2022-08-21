@@ -7,11 +7,11 @@ dotenv.config();
  * ! Put the really important configs in the .env, such as: username, password, etc.
  */
 export default {
-    MONGO_DATABASE: process.env.MONGO_DATABASE || 'kyodo',
-    MONGO_USER: process.env.MONGO_USER || 'admin',
-    MONGO_PASSWORD: process.env.MONGO_PASSWORD || 'admin',
-    MONGO_HOST: process.env.MONGO_HOST || 'localhost',
-    PORT: process.env.PORT || 4758,
+    MONGO_DATABASE: process.env.MONGO_DATABASE,
+    MONGO_USER: process.env.MONGO_USER,
+    MONGO_PASSWORD: process.env.MONGO_PASSWORD,
+    MONGO_HOST: process.env.MONGO_HOST,
+    PORT: process.env.PORT,
     CLOUD_NAME: process.env.CLOUD_NAME,
     API_KEY: process.env.CLOUD_API_KEY,
     API_SECRET: process.env.CLOUD_API_SECRET

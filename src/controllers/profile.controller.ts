@@ -3,7 +3,7 @@ import { uploadImage, deleteImage } from "../utils/cloudinary";
 import fs from "fs-extra";
 import { UploadedFile } from "express-fileupload";
 import { UploadApiOptions } from "cloudinary";
-import User from '../models/User';
+import User, { IUser } from '../models/User';
 import {CChangePassword} from '../interfaces/IUsersInterfaces';
 
 export async function changeAvatar(
@@ -14,7 +14,7 @@ export async function changeAvatar(
         return res.json({message: "No user id provided", status: false});
     }
 
-    const beforeUser = await User.findById(req.params.id);
+    const beforeUser = await User.findById(req.params.id) as IUser;
 
     if(!beforeUser){
         return res.json({message: "User not found", status: false});
@@ -38,7 +38,7 @@ export async function changeAvatar(
     const result = await uploadImage(image.tempFilePath, options);
     await fs.unlink(image.tempFilePath);
 
-    if(beforeUser.avatarImage.isAvatarImageSet){
+    if(!(beforeUser.avatarImage.avatarImagePublicId === "")){
         await deleteImage(beforeUser.avatarImage.avatarImagePublicId);
     }
 

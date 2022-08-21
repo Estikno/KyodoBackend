@@ -6,7 +6,6 @@ export interface IUser extends Document {
     password: string;
     email: string;
     avatarImage: {
-        isAvatarImageSet: boolean;
         avatarImageUrl: string;
         avatarImagePublicId: string;
     }
@@ -35,13 +34,9 @@ const userSchema = new Schema({
         trim: true
     },
     avatarImage: {
-        isAvatarImageSet: {
-            type: Boolean,
-            default: false
-        },
         avatarImageUrl: {
             type: String,
-            default: ""
+            default: "https://res.cloudinary.com/kyodo/image/upload/v1661105003/kyodo/avatars/ltcy80smngxm3c3iztfj.png"
         },
         avatarImagePublicId: {
             type: String,
