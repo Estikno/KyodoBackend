@@ -1,4 +1,4 @@
-import { v2 as cloudinary, UploadApiOptions } from "cloudinary";
+import { v2 as cloudinary, UploadApiOptions, UploadApiResponse } from "cloudinary";
 import config from '../config';
 
 
@@ -13,7 +13,7 @@ cloudinary.config({
  * Quick demo of how to upload an image to Cloudinary
  * ! Do not use this in production, it is just a quick demo
  */
-export async function uploadImage(filePath: string, options: UploadApiOptions) {
+export async function uploadImage(filePath: string, options: UploadApiOptions): Promise<UploadApiResponse> {
     return await cloudinary.uploader.upload(filePath, options);
 }
 

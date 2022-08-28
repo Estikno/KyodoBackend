@@ -1,6 +1,8 @@
 import {Router} from 'express';
 import * as authController from '../controllers/auth.controller';
 
+import {verifyBeforeAuth} from '../middlewares/authJwt';
+
 const router = Router();
 
 /**
@@ -8,8 +10,8 @@ const router = Router();
  * !Do not create the functions here, create them in the controller file
  */
 
-router.post('/register', authController.register);
+router.post('/register', verifyBeforeAuth, authController.register);
 
-router.post('/login', authController.login);
+router.post('/login', verifyBeforeAuth, authController.login);
 
 export default router;

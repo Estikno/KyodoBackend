@@ -14,5 +14,7 @@ export default {
     PORT: process.env.PORT,
     CLOUD_NAME: process.env.CLOUD_NAME,
     API_KEY: process.env.CLOUD_API_KEY,
-    API_SECRET: process.env.CLOUD_API_SECRET
+    API_SECRET: process.env.CLOUD_API_SECRET,
+    JWT_SECRET: process.env.JWT_SECRET,
+    JWT_DURATION: process.env.JWT_DURATION,
 }

@@ -2,6 +2,8 @@ import { Router } from "express";
 import fileUpload from "express-fileupload";
 import * as profileController from "../controllers/profile.controller";
 
+import {verifyToken} from '../middlewares/authJwt';
+
 const router = Router();
 
 /**
@@ -10,7 +12,8 @@ const router = Router();
  */
 
 router.post(
-    "/avatar/:id",
+    "/avatar",
+    verifyToken,
     fileUpload({
         useTempFiles: true,
         tempFileDir: "./uploads",
@@ -18,6 +21,6 @@ router.post(
     profileController.changeAvatar
 );
 
-router.post("/password/:id", profileController.changePassword);
+router.post("/password", verifyToken, profileController.changePassword);
 
 export default router;
