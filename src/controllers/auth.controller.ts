@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import User, {IUser} from '../models/User';
 import IClientResponse from '../interfaces/IClientResponse';
-import {createToken} from '../utils/jwt';
+import {createToken, verifyToken} from '../utils/jwt';
 
 /**
  * This function registers the user and creates a new user in the database
@@ -68,4 +68,12 @@ export async function login(req: Request, res: Response): Promise<Response> {
     const token: string = createToken(userCheck._id);
 
     return res.json({message: 'Logged in', status: true, token: token} as IClientResponse);
+}
+
+export function verifySession(req: Request, res: Response): Response{
+    const token: string = req.headers["token"] as string;
+
+    if(!token || token === "") return res.json({message: "Token is necessary", status: false} as IClientResponse);
+
+    return res.json({message: "Token verified", status: verifyToken(token)} as IClientResponse);
 }

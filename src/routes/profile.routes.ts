@@ -21,6 +21,6 @@ router.post(
     profileController.changeAvatar
 );
 
-router.post("/password", verifyToken, profileController.changePassword);
+router.put("/password", verifyToken, profileController.changePassword);
 
 export default router;

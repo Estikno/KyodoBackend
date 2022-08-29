@@ -9,7 +9,7 @@ export function createToken(user_id: string): string {
     return token;
 }
 
-export function verifyToken(token: string) {
+export function verifyToken(token: string): boolean {
     try {
         jwt.verify(token, config.JWT_SECRET as string); //the decoded token will be an _id of an user
 

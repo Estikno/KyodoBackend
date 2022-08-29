@@ -1,8 +1,6 @@
 import {Router} from 'express';
 import * as authController from '../controllers/auth.controller';
 
-import {verifyBeforeAuth} from '../middlewares/authJwt';
-
 const router = Router();
 
 /**
@@ -10,8 +8,11 @@ const router = Router();
  * !Do not create the functions here, create them in the controller file
  */
 
-router.post('/register', verifyBeforeAuth, authController.register);
+router.post('/register', authController.register);
 
-router.post('/login', verifyBeforeAuth, authController.login);
+router.post('/login', authController.login);
+
+//this route will be called by the client whenever the user is trying to go to a protected route
+router.get('/verify', authController.verifySession);
 
 export default router;

@@ -21,15 +21,3 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
         return res.json({ message: "Invalid token", status: false });
     }
 }
-
-export function verifyBeforeAuth(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers["token"] as string;
-
-    if (!token) {
-        next();
-    }
-
-    if(token){
-        return res.json({ message: "Token not needed", status: false})
-    }
-}
