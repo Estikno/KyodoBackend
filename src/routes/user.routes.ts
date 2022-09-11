@@ -15,4 +15,6 @@ router.get('/get', verifyToken, userController.getUser);
 
 router.put('/', verifyToken, userController.updateUser);
 
+router.delete('/', verifyToken, userController.deleteUser);
+
 export default router;

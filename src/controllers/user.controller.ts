@@ -61,3 +61,19 @@ export async function updateUser(
 
     return res.json({ message: "User updated" , status: true} as IClientResponse);
 }
+
+export async function deleteUser(req: Request, res: Response): Promise<Response> {
+    if(!req.body.user_id){
+        return res.json({message: "Id not provided" , status: false} as IClientResponse);
+    }
+
+    const foundUser: IUser | null = await User.findById(req.body.user_id);
+
+    if(!foundUser){
+        return res.json({ message: "User not found" , status: false} as IClientResponse);
+    }
+
+    await User.findByIdAndDelete(req.body.user_id);
+
+    return res.json({message: "User deleted", status: true} as IClientResponse);
+}
