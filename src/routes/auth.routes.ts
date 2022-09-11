@@ -12,7 +12,10 @@ router.post('/register', authController.register);
 
 router.post('/login', authController.login);
 
-//this route will be called by the client whenever the user is trying to go to a protected route
+/**
+ * this route will be called by the client whenever the user is trying to go to a protected route
+ * !Do not use this route in production, is deprecated
+ */
 router.get('/verify', authController.verifySession);
 
 export default router;

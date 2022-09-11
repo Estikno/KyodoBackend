@@ -13,7 +13,6 @@ router.get('/', userController.getUsers);
 
 router.get('/get', verifyToken, userController.getUser);
 
-router.put('/:id', userController.updateUser);
-
+router.put('/', verifyToken, userController.updateUser);
 
 export default router;

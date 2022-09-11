@@ -23,7 +23,7 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
     const foundUser: IUser | null = await User.findById(req.body.user_id);
 
     if (!foundUser) {
-        return res.json({ message: "User not found" , status: false});
+        return res.json({ message: "User not found" , status: false} as IClientResponse);
     }
 
     const checkedUser: IUserResponse = {
@@ -36,70 +36,28 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
 }
 
 /**
- * Update a user by id or username
- * ! Do not use this function, it's deprecated and will be removed soon
+ * Updates a user with the information passed, the update info has to be in the body in a "updateInfo" param
+ * * Do not use this method to update the avatar or the password, these functions are already working in other special routes
  */
 export async function updateUser(
     req: Request,
     res: Response
 ): Promise<Response> {
-    //* Check if the user exists and if the body is valid
-    if (!req.body.type)
-        return res.status(400).json({
-            message: "The type of search has not been said in the body",
-        });
-
-    if (req.body.type !== "id" && req.body.type !== "username")
-        return res.status(400).json({ message: "Invalid type of search" });
-
-    if (req.body.username) {
-        if (await User.findOne({ username: req.body.username }))
-            return res
-                .status(400)
-                .json({ message: "Cant update username, it is repeated" });
+    if(!req.body.user_id){
+        return res.json({ message: "User id not found" , status: false} as IClientResponse);
     }
 
-    if (req.body.email) {
-        if (await User.findOne({ email: req.body.email }))
-            return res
-                .status(400)
-                .json({ message: "cannt update email, it is repeated" });
+    if(!req.body.updateInfo){
+        return res.json({ message: "The body is missing" , status: false} as IClientResponse);
     }
 
-    //* Update the user depending on the type of search
-    if (req.body.type === "id") {
-        let user = null;
+    const foundUser: IUser | null = await User.findById(req.body.user_id);
 
-        try {
-            user = await User.findByIdAndUpdate(req.params.id, req.body, {
-                new: true,
-            });
-        } catch (err) {
-            return res
-                .status(500)
-                .json({ message: "Internal server error, error: " + err });
-        }
-
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        return res.json(user);
-    } else {
-        let user = null;
-
-        try {
-            user = await User.findOneAndUpdate(
-                { username: req.params.id },
-                req.body,
-                { new: true }
-            );
-        } catch (err) {
-            return res
-                .status(500)
-                .json({ message: "Internal server error, error: " + err });
-        }
-
-        if (!user) return res.status(404).json({ message: "User not found" });
-
-        return res.json(user);
+    if(!foundUser){
+        return res.json({ message: "User not found" , status: false} as IClientResponse);
     }
+
+    await User.findByIdAndUpdate(req.body.user_id, req.body.updateInfo);
+
+    return res.json({ message: "User updated" , status: true} as IClientResponse);
 }

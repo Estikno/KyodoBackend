@@ -1,5 +1,6 @@
 import {Schema, model, Document} from 'mongoose';
 import bcrypt from 'bcrypt';
+import config from '../config';
 
 export interface IUser extends Document {
     username: string;
@@ -36,7 +37,7 @@ const userSchema = new Schema({
     avatarImage: {
         avatarImageUrl: {
             type: String,
-            default: "https://res.cloudinary.com/kyodo/image/upload/v1661105003/kyodo/avatars/ltcy80smngxm3c3iztfj.png"
+            default: config.DEFAULT_AVATAR_URL
         },
         avatarImagePublicId: {
             type: String,

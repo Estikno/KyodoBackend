@@ -15,6 +15,7 @@ export default {
     CLOUD_NAME: process.env.CLOUD_NAME,
     API_KEY: process.env.CLOUD_API_KEY,
     API_SECRET: process.env.CLOUD_API_SECRET,
+    DEFAULT_AVATAR_URL: process.env.DEFAULT_AVATAR_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_DURATION: process.env.JWT_DURATION,
 }

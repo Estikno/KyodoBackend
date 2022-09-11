@@ -21,6 +21,8 @@ router.post(
     profileController.changeAvatar
 );
 
+router.delete("/avatar", verifyToken, profileController.removeAvatar);
+
 router.put("/password", verifyToken, profileController.changePassword);
 
 export default router;

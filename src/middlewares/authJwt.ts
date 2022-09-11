@@ -1,8 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { request } from "http";
 import jwt from "jsonwebtoken";
 import config from "../config";
-import User from '../models/User';
 import IJwt from '../interfaces/IJWT';
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {

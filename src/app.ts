@@ -26,12 +26,6 @@ class App {
         this.app.use(cors());
         this.app.use(express.json());
 
-        //! Use this middleware to upload files only on the necessary routes that need it
-        /*this.app.use(fileUpload({
-      useTempFiles: true,
-      tempFileDir: './uploads'
-    }));*/
-
         this.app.use(express.urlencoded({ extended: false }));
     }
 
