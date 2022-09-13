@@ -18,4 +18,5 @@ export default {
     DEFAULT_AVATAR_URL: process.env.DEFAULT_AVATAR_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_DURATION: process.env.JWT_DURATION,
+    BCRYPT_SALT_NUM: process.env.BCRYPT_SALT_NUM,
 }

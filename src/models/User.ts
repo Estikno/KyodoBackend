@@ -1,6 +1,7 @@
 import {Schema, model, Document} from 'mongoose';
 import bcrypt from 'bcrypt';
 import config from '../config';
+import {encrypt} from '../utils/bcrypt';
 
 export interface IUser extends Document {
     username: string;
@@ -11,6 +12,7 @@ export interface IUser extends Document {
         avatarImagePublicId: string;
     }
     comparePassword(password: string): Promise<boolean>;
+    hashPassword(): Promise<void>;
 }
 
 const userSchema = new Schema({
@@ -60,21 +62,14 @@ userSchema.pre<IUser>('save', async function(next) {
     //if the password is not modified, do not hash it
     if(!user.isModified('password')) return next();
 
-    //encrypt the password
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(user.password, salt);
-
-    //replace the password with the hashed one
-    user.password = hash;
+    //encrypt the password and replace the password with the hashed one
+    user.password = await encrypt(user.password);
 
     next();
 });
 
 userSchema.methods.hashPassword = async function(): Promise<void> {
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(this.password, salt);
-
-    this.password = hash;
+    this.password = await encrypt(this.password);
 }
 
 /**

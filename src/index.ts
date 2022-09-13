@@ -1,5 +1,6 @@
 import App from './app'
 import * as db from './database'
+import config from './config';
 
 const app: App = new App();
 
