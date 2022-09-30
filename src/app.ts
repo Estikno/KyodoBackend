@@ -9,6 +9,7 @@ import userRouter from "./routes/user.routes";
 import roomTypeRouter from "./routes/roomType.routes";
 import authRouter from "./routes/auth.routes";
 import profileRouter from "./routes/profile.routes";
+import roomRouter from './routes/room.routes';
 
 class App {
     private app: Application; //! Do not give public access to the app object
@@ -35,6 +36,7 @@ class App {
         this.app.use("/roomType", roomTypeRouter);
         this.app.use("/auth", authRouter);
         this.app.use("/profile", profileRouter);
+        this.app.use("/room", roomRouter);
     }
 
     public dbInitialValues(): void {

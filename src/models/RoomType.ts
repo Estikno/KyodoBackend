@@ -10,6 +10,8 @@ const roomTypeSchema = new Schema({
         required: true,
         trim: true
     }
+}, {
+    versionKey: false
 });
 
 export default model<IRoomType>('RoomType', roomTypeSchema);
