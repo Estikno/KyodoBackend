@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import config from "./config";
-import { createRoomTypes } from "./utils/dbInitialSetup";
+import { createRoomTypes, createMessageTypes } from "./utils/dbInitialSetup";
 
 //routes
 import userRouter from "./routes/user.routes";
@@ -41,12 +41,17 @@ class App {
 
     public dbInitialValues(): void {
         createRoomTypes();
+        createMessageTypes();
     }
 
     public listen(): void {
         this.app.listen(this.app.get("port"), () => {
             console.log("Server on port", this.app.get("port"));
         });
+    }
+
+    public getServer(): Application {
+        return this.app;
     }
 }
 

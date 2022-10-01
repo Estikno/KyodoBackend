@@ -1,17 +1,20 @@
-import {model, Schema, Document} from 'mongoose';
+import { model, Schema, Document } from "mongoose";
 
 export interface IRoomType extends Document {
     type: string;
 }
 
-const roomTypeSchema = new Schema({
-    type: {
-        type: String,
-        required: true,
-        trim: true
+const roomTypeSchema = new Schema(
+    {
+        type: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+    },
+    {
+        versionKey: false,
     }
-}, {
-    versionKey: false
-});
+);
 
-export default model<IRoomType>('RoomType', roomTypeSchema);
+export default model<IRoomType>("RoomType", roomTypeSchema);
