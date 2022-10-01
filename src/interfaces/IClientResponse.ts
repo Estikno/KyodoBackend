@@ -3,6 +3,7 @@ export default interface IClientResponse {
     message: string;
     token?: string;
     user?: IUserResponse | IUserResponse[];
+    room?: string;
 }
 
 export interface IUserResponse {
