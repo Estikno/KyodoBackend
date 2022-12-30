@@ -2,14 +2,11 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import config from "./config";
-import { createRoomTypes, createMessageTypes } from "./utils/dbInitialSetup";
 
 //routes
 import userRouter from "./routes/user.routes";
-import roomTypeRouter from "./routes/roomType.routes";
 import authRouter from "./routes/auth.routes";
 import profileRouter from "./routes/profile.routes";
-import roomRouter from './routes/room.routes';
 
 class App {
     private app: Application; //! Do not give public access to the app object
@@ -33,15 +30,8 @@ class App {
     //* Impotant to add the routes here, otherwise the routes will not be available, and also set the prefix for the routes
     public routes(): void {
         this.app.use("/user", userRouter);
-        this.app.use("/roomType", roomTypeRouter);
         this.app.use("/auth", authRouter);
         this.app.use("/profile", profileRouter);
-        this.app.use("/room", roomRouter);
-    }
-
-    public dbInitialValues(): void {
-        createRoomTypes();
-        createMessageTypes();
     }
 
     public listen(): void {

@@ -19,10 +19,4 @@ export default {
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_DURATION: process.env.JWT_DURATION,
     BCRYPT_SALT_NUM: process.env.BCRYPT_SALT_NUM,
-    MESSAGE_TYPES: {
-        MESSAGE_TYPE_AUDIO: process.env.MESSAGE_TYPE_AUDIO,
-        MESSAGE_TYPE_MESSAGE: process.env.MESSAGE_TYPE_MESSAGE,
-        MESSAGE_TYPE_IMAGE: process.env.MESSAGE_TYPE_IMAGE,
-        MESSAGE_TYPE_VIDEO: process.env.MESSAGE_TYPE_VIDEO
-    },
 };
