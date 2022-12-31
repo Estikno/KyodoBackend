@@ -22,12 +22,6 @@ db.connectDB();
 const io = new Server(5050, { cors: { origin: "*" } });
 
 io.on("connection", (socket: Socket) => {
-    
-    socket.on("add-user", async (user) => {
-        const allMessages: string[] = (await getMessages()).map(each => each.message)
-        socket.emit("all-msg", (allMessages).toString());
-    });
-
     socket.on("send-msg", async (msg) => {
         const foundUser = await User.findOne({ username: msg.person });
         
