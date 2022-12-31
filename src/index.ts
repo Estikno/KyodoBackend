@@ -21,23 +21,19 @@ db.connectDB();
 //io
 const io = new Server(5050, { cors: { origin: "*" } });
 
-const connectedUsers: Map<string, string> = new Map();
-
 io.on("connection", (socket: Socket) => {
+    
     socket.on("add-user", async (user) => {
-        connectedUsers.set(socket.id, user);
-        const allMessages: string[] = (await getMessages()).map(each => each.message);
-        socket.emit("all-msg", (allMessages).toString())
-        io.emit("msg", "A venido " + user);
+        const allMessages: string[] = (await getMessages()).map(each => each.message)
+        socket.emit("all-msg", (allMessages).toString());
     });
 
     socket.on("send-msg", async (msg) => {
-        const users_name = connectedUsers.get(socket.id);
-        const foundUser = await User.findOne({ username: users_name });
+        const foundUser = await User.findOne({ username: msg.person });
         
         if (foundUser) {
-            await createMessage(foundUser._id, msg);
-            socket.broadcast.emit("msg", msg);
+            await createMessage(foundUser._id, msg.message);
+            socket.broadcast.emit("msg", msg.message);
         }
     });
 });
