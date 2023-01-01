@@ -2,6 +2,9 @@ import {Request, Response} from 'express';
 import User, {IUser} from '../models/User';
 import IClientResponse from '../interfaces/IClientResponse';
 import {createToken, verifyToken} from '../utils/jwt';
+import {sendVerificationEmail} from '../utils/email';
+import jwt from "jsonwebtoken";
+import config from "../config";
 
 /**
  * This function registers the user and creates a new user in the database
@@ -30,6 +33,10 @@ export async function register(req: Request, res: Response): Promise<Response> {
     await newUser.save();
 
     const token: string = createToken(newUser._id);
+
+    //email verification
+    const verification_token: string = createToken(newUser.username);
+    sendVerificationEmail(newUser.email, `http://localhost:4758/auth/verification/${verification_token}`, newUser.username);
 
     return res.json({message: 'User created', status: true, token: token} as IClientResponse);
 }
@@ -76,4 +83,21 @@ export function verifySession(req: Request, res: Response): Response{
     if(!token || token === "") return res.json({message: "Token is necessary", status: false} as IClientResponse);
 
     return res.json({message: "Token verified", status: verifyToken(token)} as IClientResponse);
+}
+
+interface jwaks{
+    id: string;
+}
+
+export async function verification(req: Request, res: Response): Promise<Response>{
+    const token: string = req.params.token;
+
+    try{
+        const {id} = jwt.verify(token, config.JWT_SECRET as string) as jwaks;
+        await User.findOneAndUpdate({username: id}, {verified: true})
+        return res.json({message: "Token verified", status: true} as IClientResponse);
+    }
+    catch(err){
+        return res.json({message: "Token is invalid", status: false} as IClientResponse);
+    }
 }

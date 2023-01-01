@@ -19,4 +19,7 @@ export default {
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_DURATION: process.env.JWT_DURATION,
     BCRYPT_SALT_NUM: process.env.BCRYPT_SALT_NUM,
+    EMAIL_USER: process.env.EMAIL_USER,
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
+    EMAIL_PASSWORD_APP: process.env.EMAIL_PASSWORD_APP
 };
