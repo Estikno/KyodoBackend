@@ -10,7 +10,8 @@ export interface IUser extends Document {
     avatarImage: {
         avatarImageUrl: string;
         avatarImagePublicId: string;
-    }
+    };
+    verified: boolean;
     comparePassword(password: string): Promise<boolean>;
     hashPassword(): Promise<void>;
 }

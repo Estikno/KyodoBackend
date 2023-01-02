@@ -5,6 +5,7 @@ import {createToken, verifyToken} from '../utils/jwt';
 import {sendVerificationEmail} from '../utils/email';
 import jwt from "jsonwebtoken";
 import config from "../config";
+import IJwt from '../interfaces/IJWT';
 
 /**
  * This function registers the user and creates a new user in the database
@@ -85,19 +86,24 @@ export function verifySession(req: Request, res: Response): Response{
     return res.json({message: "Token verified", status: verifyToken(token)} as IClientResponse);
 }
 
-interface jwaks{
-    id: string;
-}
-
 export async function verification(req: Request, res: Response): Promise<Response>{
     const token: string = req.params.token;
 
     try{
-        const {id} = jwt.verify(token, config.JWT_SECRET as string) as jwaks;
+        const {id} = jwt.verify(token, config.JWT_SECRET as string) as IJwt;
         await User.findOneAndUpdate({username: id}, {verified: true})
         return res.json({message: "Token verified", status: true} as IClientResponse);
     }
     catch(err){
         return res.json({message: "Token is invalid", status: false} as IClientResponse);
     }
+}
+
+export async function verifiedUser(req: Request, res: Response): Promise<Response> {
+    const user_id: string = req.body.user_id;
+    const _user: IUser | null = await User.findById(user_id);
+
+    if(!_user) return res.json({message: "User not found", status: false} as IClientResponse);
+
+    return res.json({message: "User verified", status: true, user: {verified: _user.verified}} as IClientResponse)
 }

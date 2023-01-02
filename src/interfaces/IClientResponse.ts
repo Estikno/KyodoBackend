@@ -10,4 +10,5 @@ export interface IUserResponse {
     username: string;
     email: string;
     avatarUrl: string;
+    verified: boolean;
 }

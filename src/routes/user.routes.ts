@@ -2,7 +2,7 @@ import {Router} from 'express';
 import * as userController from '../controllers/user.controller';
 
 import {verifyToken} from '../middlewares/authJwt';
-import {sendVerificationEmail} from '../utils/email';
+import {getTokenContent} from '../utils/jwt';
 
 const router = Router();
 
