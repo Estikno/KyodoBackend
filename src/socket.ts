@@ -26,6 +26,7 @@ export async function io_setup() {
                 avatarUrl: newUser.avatarImage.avatarImageUrl,
                 email: newUser.email,
                 username: newUser.username,
+                verified: newUser.verified
             };
             socket.broadcast.emit("new-usr", newUserResponse);
         });

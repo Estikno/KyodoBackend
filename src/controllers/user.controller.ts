@@ -25,7 +25,8 @@ export async function getUsers(req: Request, res: Response): Promise<Response> {
             returningUsers.push({
                 username: user.username,
                 email: user.email,
-                avatarUrl: user.avatarImage.avatarImageUrl
+                avatarUrl: user.avatarImage.avatarImageUrl,
+                verified: user.verified
             })
         }
     });
@@ -53,7 +54,8 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
     const checkedUser: IUserResponse = {
         username: foundUser.username,
         email: foundUser.email,
-        avatarUrl: foundUser.avatarImage.avatarImageUrl
+        avatarUrl: foundUser.avatarImage.avatarImageUrl,
+        verified: foundUser.verified
     };
 
     return res.json({user: checkedUser, message: "User found", status: true} as IClientResponse);
