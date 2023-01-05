@@ -37,7 +37,7 @@ export async function register(req: Request, res: Response): Promise<Response> {
 
     //email verification
     const verification_token: string = createToken(newUser.username);
-    sendVerificationEmail(newUser.email, `http://localhost:4758/auth/verification/${verification_token}`, newUser.username);
+    sendVerificationEmail(newUser.email, `http://localhost:3000/email-confirm/${verification_token}`, newUser.username);
 
     return res.json({message: 'User created', status: true, token: token} as IClientResponse);
 }

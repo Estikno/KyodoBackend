@@ -9,6 +9,7 @@ export async function connectDB() {
             pass: config.MONGO_PASSWORD */
         }
 
+        mongoose.set("strictQuery", false);
         const db = await mongoose.connect(`mongodb://${config.MONGO_HOST}/${config.MONGO_DATABASE}`, options);
         console.log(`Database connected: ${db.connection.name}`);
     }
