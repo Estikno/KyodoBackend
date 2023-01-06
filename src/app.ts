@@ -7,6 +7,7 @@ import config from "./config";
 import userRouter from "./routes/user.routes";
 import authRouter from "./routes/auth.routes";
 import profileRouter from "./routes/profile.routes";
+import adminRouter from './routes/admin.routes';
 
 class App {
     private app: Application; //! Do not give public access to the app object
@@ -32,6 +33,7 @@ class App {
         this.app.use("/user", userRouter);
         this.app.use("/auth", authRouter);
         this.app.use("/profile", profileRouter);
+        this.app.use("/admin", adminRouter);
     }
 
     public listen(): void {

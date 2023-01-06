@@ -15,7 +15,7 @@ export async function io_setup() {
             const allMessages: string[] = (await getMessages()).map(
                 (each) => each.message
             );
-            socket.emit("all-msg", allMessages.toString());
+            socket.emit("all-msg", allMessages);
 
             if (connectedUsers.get(user)) return;
             if (!newUser) return;
@@ -36,7 +36,7 @@ export async function io_setup() {
 
             if (foundUser) {
                 await createMessage(foundUser._id, msg.message);
-                socket.broadcast.emit("msg", msg.message);
+                io.emit("msg", {message: msg.message, username: msg.person});
             }
         });
     });

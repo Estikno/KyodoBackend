@@ -1,12 +1,13 @@
+"use strict";
 /*import dotenv from "dotenv";
 
 dotenv.config();*/
-
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * * Put all the important configs here and import it in the other scripts
  * ! Put the really important configs in the .env, such as: username, password, etc.
  */
-export default {
+exports.default = {
     MONGO_DATABASE: process.env.MONGO_DATABASE,
     MONGO_USER: process.env.MONGO_USER,
     MONGO_PASSWORD: process.env.MONGO_PASSWORD,
