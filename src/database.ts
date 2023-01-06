@@ -13,7 +13,7 @@ export async function connectDB() {
         }
 
         mongoose.set("strictQuery", false);
-        const db = await mongoose.connect(`mongodb://${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DATABASE}`, options);
+        const db = await mongoose.connect(`mongodb://${config.MONGO_USER}:${config.MONGO_PASSWORD}@containers-us-west-195.railway.app:5838/kyodo`);
         console.log(`Database connected: ${db.connection.name}`);
     }
     catch(err){
