@@ -4,7 +4,7 @@ import config from './config';
 export async function connectDB() {
     try{
         //TODO: Add to the config the user and password for the mongo db
-        const options: ConnectOptions = {
+        const options = {
             auth: {
                 username: config.MONGO_USER,
                 password: config.MONGO_PASSWORD
@@ -12,10 +12,11 @@ export async function connectDB() {
             authSource: "admin"
         }
 
-        const db = await mongoose.connect(`mongodb://${ config.MONGO_USER }:${ config.MONGO_PASSWORD }@${ config.MONGO_HOST }:${ config.MONGO_PORT }/${config.MONGO_DATABASE}`);
+        mongoose.set('strictQuery', true);
+        const db = await mongoose.connect(`mongodb://${ config.MONGO_HOST }:${ config.MONGO_PORT }/${config.MONGO_DATABASE}`, options);
         console.log(`Database connected: ${db.connection.name}`);
     }
     catch(err){
-        console.log("err");
+        console.log(err);
     }   
 }
