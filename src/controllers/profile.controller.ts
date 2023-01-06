@@ -155,7 +155,7 @@ export async function removeAvatar(
         avatarImagePublicId: "",
     };
 
-    foundUser.save();
+    await foundUser.save();
 
     return res.json({
         message: "Avatar removed successfully",
