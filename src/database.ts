@@ -14,10 +14,10 @@ export async function connectDB() {
 
         mongoose.set("strictQuery", false);
         const db = await mongoose.connect(`mongodb://${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DATABASE}`, options);
-        console.log(`mongodb://${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DATABASE}`)
         console.log(`Database connected: ${db.connection.name}`);
     }
     catch(err){
+        console.log(`mongodb://${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DATABASE}`)
         console.log(err);
     }   
 }
