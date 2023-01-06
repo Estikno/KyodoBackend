@@ -12,7 +12,7 @@ export async function connectDB() {
             authSource: "admin"
         }
 
-        const db = await mongoose.connect(`mongodb://${ config.MONGO_USER }:${ config.MONGO_PASSWORD }@${ config.MONGO_HOST }:${ config.MONGO_PORT }/${config.MONGO_DATABASE}`);
+        const db = await mongoose.connect(`mongodb://${ process.env.MONGO_USER }:${ process.env.MONGO_PASSWORD }@${ process.env.MONGO_HOST }:${ process.env.MONGO_PORT }/${process.env.MONGO_DATABASE}`);
         console.log(`Database connected: ${db.connection.name}`);
     }
     catch(err){
