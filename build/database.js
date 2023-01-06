@@ -20,11 +20,14 @@ function connectDB() {
         try {
             //TODO: Add to the config the user and password for the mongo db
             const options = {
-            /* user: config.MONGO_USER,
-            pass: config.MONGO_PASSWORD */
+                auth: {
+                    username: config_1.default.MONGO_USER,
+                    password: config_1.default.MONGO_PASSWORD
+                },
+                authSource: "admin"
             };
-            mongoose_1.default.set("strictQuery", false);
-            const db = yield mongoose_1.default.connect(`mongodb://${config_1.default.MONGO_HOST}/${config_1.default.MONGO_DATABASE}`, options);
+            mongoose_1.default.set('strictQuery', true);
+            const db = yield mongoose_1.default.connect(`mongodb://${config_1.default.MONGO_HOST}:${config_1.default.MONGO_PORT}/${config_1.default.MONGO_DATABASE}`, options);
             console.log(`Database connected: ${db.connection.name}`);
         }
         catch (err) {

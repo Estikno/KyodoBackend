@@ -131,7 +131,7 @@ function removeAvatar(req, res) {
             avatarImageUrl: config_1.default.DEFAULT_AVATAR_URL,
             avatarImagePublicId: "",
         };
-        foundUser.save();
+        yield foundUser.save();
         return res.json({
             message: "Avatar removed successfully",
             status: true,
