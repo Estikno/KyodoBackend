@@ -12,9 +12,6 @@ app.routes();
 //start application
 app.listen();
 
-console.log(config.MONGO_USER)
-console.log(config.MONGO_PASSWORD)
-
 //connect to the database
 db.connectDB();
 
