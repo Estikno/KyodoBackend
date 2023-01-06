@@ -15,5 +15,8 @@ app.listen();
 //connect to the database
 db.connectDB();
 
+console.log(config.MONGO_USER)
+console.log(config.MONGO_PASSWORD)
+
 //io
 io_setup();
