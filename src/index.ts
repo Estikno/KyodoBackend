@@ -12,11 +12,11 @@ app.routes();
 //start application
 app.listen();
 
-//connect to the database
-db.connectDB();
-
 console.log(config.MONGO_USER)
 console.log(config.MONGO_PASSWORD)
+
+//connect to the database
+db.connectDB();
 
 //io
 io_setup();

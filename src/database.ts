@@ -13,7 +13,7 @@ export async function connectDB() {
         }
 
         mongoose.set("strictQuery", false);
-        const db = await mongoose.connect(`mongodb://mongo:hlbrvI3SX5DRh5We8xOa@containers-us-west-195.railway.app:5838/kyodo`, options);
+        const db = await mongoose.connect(`mongodb://mongo:hlbrvI3SX5DRh5We8xOa@containers-us-west-195.railway.app:5838/kyodo`);
         console.log(`Database connected: ${db.connection.name}`);
     }
     catch(err){
