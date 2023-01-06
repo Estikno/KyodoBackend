@@ -6,11 +6,11 @@ export async function connectDB() {
         //TODO: Add to the config the user and password for the mongo db
         const options: ConnectOptions = {
             user: config.MONGO_USER,
-            pass: config.MONGO_PASSWORD
+            pass: config.MONGO_PASSWORD,
         }
 
         mongoose.set("strictQuery", false);
-        const db = await mongoose.connect(`mongodb://${config.MONGO_HOST}/${config.MONGO_DATABASE}`, options);
+        const db = await mongoose.connect(`mongodb://${config.MONGO_HOST}:${config.MONGO_PORT}/${config.MONGO_DATABASE}`, options);
         console.log(`Database connected: ${db.connection.name}`);
     }
     catch(err){
