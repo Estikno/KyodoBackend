@@ -5,8 +5,8 @@ export async function connectDB() {
     try{
         //TODO: Add to the config the user and password for the mongo db
         const options: ConnectOptions = {
-            /* user: config.MONGO_USER,
-            pass: config.MONGO_PASSWORD */
+            user: config.MONGO_USER,
+            pass: config.MONGO_PASSWORD
         }
 
         mongoose.set("strictQuery", false);
