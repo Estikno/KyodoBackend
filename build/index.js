@@ -29,13 +29,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const db = __importStar(require("./database"));
 const socket_1 = require("./socket");
+const http_1 = __importDefault(require("http"));
+const socket_io_1 = require("socket.io");
 const app = new app_1.default();
+const server = http_1.default.createServer(app.getServer());
+const io = new socket_io_1.Server(server, { cors: { origin: "*" } });
 //configure the application
 app.config();
 app.routes();
 //start application
-app.listen();
+app.listen(server);
 //connect to the database
 db.connectDB();
 //io
-(0, socket_1.io_setup)();
+(0, socket_1.io_setup)(io);

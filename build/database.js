@@ -27,7 +27,7 @@ function connectDB() {
                 authSource: "admin"
             };
             mongoose_1.default.set('strictQuery', true);
-            const db = yield mongoose_1.default.connect(`mongodb://${config_1.default.MONGO_HOST}:${config_1.default.MONGO_PORT}/${config_1.default.MONGO_DATABASE}`, options);
+            const db = yield mongoose_1.default.connect(`mongodb://${config_1.default.MONGO_HOST}:${config_1.default.MONGO_PORT}/${config_1.default.MONGO_DATABASE}`);
             console.log(`Database connected: ${db.connection.name}`);
         }
         catch (err) {

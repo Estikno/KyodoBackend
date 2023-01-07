@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUser = exports.getUser = exports.getUsers = void 0;
 const User_1 = __importDefault(require("../models/User"));
+const cloudinary_1 = require("../utils/cloudinary");
 /**
  * Get all users
  */
@@ -98,6 +99,11 @@ function deleteUser(req, res) {
         if (!foundUser) {
             return res.json({ message: "User not found", status: false });
         }
+        if (foundUser.avatarImage.avatarImagePublicId === "") {
+            yield User_1.default.findByIdAndDelete(req.body.user_id);
+            return res.json({ message: "User deleted", status: true });
+        }
+        yield (0, cloudinary_1.deleteImage)(foundUser.avatarImage.avatarImagePublicId);
         yield User_1.default.findByIdAndDelete(req.body.user_id);
         return res.json({ message: "User deleted", status: true });
     });

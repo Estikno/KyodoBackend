@@ -33,8 +33,8 @@ class App {
         this.app.use("/profile", profile_routes_1.default);
         this.app.use("/admin", admin_routes_1.default);
     }
-    listen() {
-        this.app.listen(this.app.get("port"), () => {
+    listen(httpServer) {
+        httpServer.listen(this.app.get("port"), () => {
             console.log("Server on port", this.app.get("port"));
         });
     }

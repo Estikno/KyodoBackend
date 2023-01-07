@@ -13,12 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.io_setup = void 0;
-const socket_io_1 = require("socket.io");
 const User_1 = __importDefault(require("./models/User"));
 const message_util_1 = require("./utils/message.util");
-function io_setup() {
+function io_setup(io) {
     return __awaiter(this, void 0, void 0, function* () {
-        const io = new socket_io_1.Server(5050, { cors: { origin: "*" } });
         const connectedUsers = new Map();
         io.on("connection", (socket) => {
             socket.on("add-user", (user) => __awaiter(this, void 0, void 0, function* () {
@@ -34,7 +32,7 @@ function io_setup() {
                     avatarUrl: newUser.avatarImage.avatarImageUrl,
                     email: newUser.email,
                     username: newUser.username,
-                    verified: newUser.verified
+                    verified: newUser.verified,
                 };
                 socket.broadcast.emit("new-usr", newUserResponse);
             }));
