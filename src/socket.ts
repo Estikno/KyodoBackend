@@ -3,9 +3,7 @@ import User from "./models/User";
 import { createMessage, getMessages } from "./utils/message.util";
 import { IUserResponse } from "./interfaces/IClientResponse";
 
-export async function io_setup() {
-    const io = new Server(5050, { cors: { origin: "*" } });
-
+export async function io_setup(io: Server) {
     const connectedUsers: Map<string, string> = new Map();
 
     io.on("connection", (socket: Socket) => {
@@ -26,7 +24,7 @@ export async function io_setup() {
                 avatarUrl: newUser.avatarImage.avatarImageUrl,
                 email: newUser.email,
                 username: newUser.username,
-                verified: newUser.verified
+                verified: newUser.verified,
             };
             socket.broadcast.emit("new-usr", newUserResponse);
         });
@@ -36,7 +34,7 @@ export async function io_setup() {
 
             if (foundUser) {
                 await createMessage(foundUser._id, msg.message);
-                io.emit("msg", {message: msg.message, username: msg.person});
+                io.emit("msg", { message: msg.message, username: msg.person });
             }
         });
     });

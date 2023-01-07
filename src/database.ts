@@ -13,7 +13,7 @@ export async function connectDB() {
         }
 
         mongoose.set('strictQuery', true);
-        const db = await mongoose.connect(`mongodb://${ config.MONGO_HOST }:${ config.MONGO_PORT }/${config.MONGO_DATABASE}`, options);
+        const db = await mongoose.connect(`mongodb://${ config.MONGO_HOST }:${ config.MONGO_PORT }/${config.MONGO_DATABASE}`);
         console.log(`Database connected: ${db.connection.name}`);
     }
     catch(err){

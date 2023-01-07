@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import IClientResponse, { IUserResponse } from "../interfaces/IClientResponse";
 import User, { IUser } from "../models/User";
+import {deleteImage} from '../utils/cloudinary';
 
 /**
  * Get all users
@@ -99,6 +100,13 @@ export async function deleteUser(req: Request, res: Response): Promise<Response>
         return res.json({ message: "User not found" , status: false} as IClientResponse);
     }
 
+
+    if(foundUser.avatarImage.avatarImagePublicId === ""){
+        await User.findByIdAndDelete(req.body.user_id);
+        return res.json({ message: "User deleted", status: true} as IClientResponse);
+    }
+
+    await deleteImage(foundUser.avatarImage.avatarImagePublicId);
     await User.findByIdAndDelete(req.body.user_id);
 
     return res.json({message: "User deleted", status: true} as IClientResponse);

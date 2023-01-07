@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import config from "./config";
+import {Server} from 'http';
 
 //routes
 import userRouter from "./routes/user.routes";
@@ -36,8 +37,8 @@ class App {
         this.app.use("/admin", adminRouter);
     }
 
-    public listen(): void {
-        this.app.listen(this.app.get("port"), () => {
+    public listen(httpServer: Server): void {
+        httpServer.listen(this.app.get("port"), () => {
             console.log("Server on port", this.app.get("port"));
         });
     }
