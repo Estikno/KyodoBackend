@@ -5,6 +5,7 @@ dotenv.config();*/
 /**
  * * Put all the important configs here and import it in the other scripts
  * ! Put the really important configs in the .env, such as: username, password, etc.
+ * ! In production you will have to delete the dotenv configuration, and set those variables in the server configuration
  */
 export default {
     MONGO_DATABASE: process.env.MONGO_DATABASE,
