@@ -1,10 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+/*import dotenv from "dotenv";
+
+dotenv.config();*/
 Object.defineProperty(exports, "__esModule", { value: true });
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
 /**
  * * Put all the important configs here and import it in the other scripts
  * ! Put the really important configs in the .env, such as: username, password, etc.
