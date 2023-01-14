@@ -1,6 +1,6 @@
-/*import dotenv from "dotenv";
+import dotenv from "dotenv";
 
-dotenv.config();*/
+dotenv.config();
 
 /**
  * * Put all the important configs here and import it in the other scripts
