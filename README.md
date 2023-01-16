@@ -221,7 +221,7 @@ Please read the [Code of Conduct](https://github.com/Louis3797/awesome-readme-te
 <!-- License -->
 ## :warning: License
 
-Distributed under the no License. See LICENSE.txt for more information.
+Distributed under the no License. See `LICENSE.md` for more information.
 
 
 <!-- Contact -->
