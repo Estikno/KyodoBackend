@@ -192,6 +192,11 @@ To deploy this project to a linux sever simply run the following command
   ./deploy.sh
 ```
 
+On another hand, if you want to delete everithing that the above command did, simply excecute this one
+
+```bash
+  ./delete.sh
+```
 
 <!-- Contributing -->
 ## :wave: Contributing
