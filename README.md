@@ -1,0 +1,284 @@
+<div align="center">
+
+  <img src="assets/logo.png" alt="logo" width="200" height="auto" />
+  <h1>Kyodo's Backend</h1>
+  
+  <p>
+    The official Kyodo backend you can host on your own system. 
+  </p>
+  
+  
+<!-- Badges -->
+<p>
+  <a href="https://github.com/Estiknok/KyodoBackend/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/Estiknok/KyodoBackend" alt="contributors" />
+  </a>
+  <a href="">
+    <img src="https://img.shields.io/github/last-commit/Estiknok/KyodoBackend" alt="last update" />
+  </a>
+  <a href="https://github.com/Estiknok/KyodoBackend/network/members">
+    <img src="https://img.shields.io/github/forks/Estiknok/KyodoBackend" alt="forks" />
+  </a>
+  <a href="https://github.com/Estiknok/KyodoBackend/stargazers">
+    <img src="https://img.shields.io/github/stars/Estiknok/KyodoBackend" alt="stars" />
+  </a>
+  <a href="https://github.com/Estiknok/KyodoBackend/issues/">
+    <img src="https://img.shields.io/github/issues/Estiknok/KyodoBackend" alt="open issues" />
+  </a>
+  <a href="https://github.com/Estiknok/KyodoBackend/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/Estiknok/KyodoBackend.svg" alt="license" />
+  </a>
+</p>
+   
+<h4>
+    <a href="https://github.com/Estiknok/KyodoBackend">View Demo</a>
+  <span> · </span>
+    <a href="https://github.com/Estiknok/KyodoBackend">Documentation</a>
+  <span> · </span>
+    <a href="https://github.com/Estiknok/KyodoBackend/issues/">Report Bug</a>
+  <span> · </span>
+    <a href="https://github.com/Estiknok/KyodoBackend/issues/">Request Feature</a>
+  </h4>
+</div>
+
+<br />
+
+<!-- Table of Contents -->
+# :notebook_with_decorative_cover: Table of Contents
+
+- [About the Project](#star2-about-the-project)
+  * [Screenshots](#camera-screenshots)
+  * [Tech Stack](#space_invader-tech-stack)
+  * [Environment Variables](#key-environment-variables)
+- [Getting Started](#toolbox-getting-started)
+  * [Prerequisites](#bangbang-prerequisites)
+  * [Installation](#gear-installation)
+  * [Run Locally](#running-run-locally)
+  * [Deployment](#triangular_flag_on_post-deployment)
+- [Contributing](#wave-contributing)
+  * [Code of Conduct](#scroll-code-of-conduct)
+- [License](#warning-license)
+- [Contact](#handshake-contact)
+- [Acknowledgements](#gem-acknowledgements)
+
+  
+
+<!-- About the Project -->
+## :star2: About the Project
+
+
+<!-- Screenshots -->
+### :camera: Screenshots
+
+<div align="center"> 
+  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
+</div>
+
+
+<!-- TechStack -->
+### :space_invader: Tech Stack
+
+<details>
+  <summary>Server</summary>
+  <ul>
+    <li><a href="https://nodejs.org">NodeJS</a></li>
+    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
+    <li><a href="https://expressjs.com/">Express.js</a></li>
+    <li><a href="https://socket.io/">SocketIO</a></li>
+  </ul>
+</details>
+
+<details>
+<summary>Database</summary>
+  <ul>
+    <li><a href="https://redis.io/">Redis</a></li>
+    <li><a href="https://www.mongodb.com/">MongoDB</a></li>
+  </ul>
+</details>
+
+<details>
+<summary>DevOps</summary>
+  <ul>
+    <li><a href="https://www.docker.com/">Docker</a></li>
+    <li><a href="https://cloudinary.com">Clodinary</a></li>
+  </ul>
+</details>
+<details>
+<summary>Deployment</summary>
+  <ul>
+    <li><a href="https://www.nginx.com">Nginx</a></li>
+    <li><a href="https://pm2.keymetrics.io">Pm2</a></li>
+  </ul>
+</details>
+
+* [![Next][Next.js]][Next-url]
+* [![React][React.js]][React-url]
+* [![Vue][Vue.js]][Vue-url]
+* [![Angular][Angular.io]][Angular-url]
+* [![Svelte][Svelte.dev]][Svelte-url]
+* [![Laravel][Laravel.com]][Laravel-url]
+* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
+* [![JQuery][JQuery.com]][JQuery-url]
+
+
+<!-- Env Variables -->
+### :key: Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`CLOUD_NAME`
+
+`CLOUD_API_KEY`
+
+`CLOUD_API_SECRET`
+
+`DEFAULT_AVATAR_URL`
+
+`PORT`
+
+`BCRYPT_SALT_NUM`
+
+`MONGO_HOST`
+
+`MONGO_PASSWORD`
+
+`MONGO_USER`
+
+`MONGO_DATABASE`
+
+`MONGO_PORT`
+
+`JWT_SECRET`
+
+`JWT_DURATION`
+
+`EMAIL_USER`
+
+`EMAIL_PASSWORD`
+
+`EMAIL_PASSWORD_APP`
+
+`ADMIN_PASSWORD`
+
+<!-- Getting Started -->
+## 	:toolbox: Getting Started
+
+<!-- Prerequisites -->
+### :bangbang: Prerequisites
+
+This project uses Nodejs and npm to manage all the necessary libraries
+
+You will also need a MongoDB database
+
+<!-- Installation -->
+### :gear: Installation
+
+To install the project simply clone this respository
+
+```bash
+  git clone https://github.com/Estiknok/KyodoBackend.git
+  cd KyodoBackend
+```
+
+Now only excecute the following commands on a terminal inside the project to install the dependencies and setup the project
+
+```bash
+  npm i
+  npm run build
+```
+
+<!-- Run Locally -->
+### :running: Run Locally
+
+To run the project locally simply excecute the following command on a terminal inside the project to start the server
+
+```bash
+  npm run start
+```
+
+
+<!-- Deployment -->
+### :triangular_flag_on_post: Deployment
+
+To deploy this project to a linux sever simply run the following command
+
+:bangbang: Note that you will need to have all the deployment dependecies if not this script will lead to errors
+
+```bash
+  ./deploy.sh
+```
+
+
+<!-- Contributing -->
+## :wave: Contributing
+
+<a href="https://github.com/Estiknok/KyodoBackend/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Estiknok/KyodoBackend" />
+</a>
+
+
+Contributions are always welcome!
+
+See `contributing.md` for ways to get started.
+
+
+<!-- Code of Conduct -->
+### :scroll: Code of Conduct
+
+Please read the [Code of Conduct](https://github.com/Louis3797/awesome-readme-template/blob/master/CODE_OF_CONDUCT.md)
+
+<!-- License -->
+## :warning: License
+
+Distributed under the no License. See LICENSE.txt for more information.
+
+
+<!-- Contact -->
+## :handshake: Contact
+
+Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+
+Project Link: [https://github.com/Estiknok/KyodoBackend](https://github.com/Estiknok/KyodoBackend)
+
+
+<!-- Acknowledgments -->
+## :gem: Acknowledgements
+
+Use this section to mention useful resources and libraries that you have used in your projects.
+
+ - [Shields.io](https://shields.io/)
+ - [Awesome README](https://github.com/matiassingers/awesome-readme)
+ - [Emoji Cheat Sheet](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#travel--places)
+ - [Readme Template](https://github.com/othneildrew/Best-README-Template)
+
+
+
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/othneildrew
+[product-screenshot]: images/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
+[Svelte-url]: https://svelte.dev/
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com 
