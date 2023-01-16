@@ -31,10 +31,6 @@
 </p>
    
 <h4>
-    <a href="https://github.com/Estiknok/KyodoBackend">View Demo</a>
-  <span> · </span>
-    <a href="https://github.com/Estiknok/KyodoBackend">Documentation</a>
-  <span> · </span>
     <a href="https://github.com/Estiknok/KyodoBackend/issues/">Report Bug</a>
   <span> · </span>
     <a href="https://github.com/Estiknok/KyodoBackend/issues/">Request Feature</a>
@@ -56,10 +52,7 @@
   * [Run Locally](#running-run-locally)
   * [Deployment](#triangular_flag_on_post-deployment)
 - [Contributing](#wave-contributing)
-  * [Code of Conduct](#scroll-code-of-conduct)
 - [License](#warning-license)
-- [Contact](#handshake-contact)
-- [Acknowledgements](#gem-acknowledgements)
 
   
 
