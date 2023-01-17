@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="assets/logo.png" alt="logo" width="200" height="auto" />
+  <img src="https://res.cloudinary.com/kyodo/image/upload/v1673968570/kyodo/icons/Logo_jlsedv.png" alt="logo" width="200" height="auto" />
   <h1>Kyodo's Backend</h1>
   
   <p>
@@ -64,7 +64,7 @@
 ### :camera: Screenshots
 
 <div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
+  <img src="https://res.cloudinary.com/kyodo/image/upload/v1673968968/kyodo/icons/screenshotKyodoBackend_adpgra.png" alt="screenshot" />
 </div>
 
 
