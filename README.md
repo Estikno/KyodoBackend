@@ -213,7 +213,7 @@ See `contributing.md` for ways to get started.
 <!-- License -->
 ## :warning: License
 
-Distributed under the no License. See `LICENSE.md` for more information.
+Distributed under the MIT license. See `LICENSE.md` for more information.
 
 
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
