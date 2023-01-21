@@ -3,6 +3,11 @@ import User from "./models/User";
 import { createMessage, getMessages } from "./utils/message.util";
 import { IUserResponse } from "./interfaces/IClientResponse";
 
+interface sendMessage {
+    message: string;
+    username: string;
+}
+
 export async function io_setup(io: Server) {
     const connectedUsers: Map<string, string> = new Map();
 
@@ -10,8 +15,13 @@ export async function io_setup(io: Server) {
         socket.on("add-user", async (user) => {
             const newUser = await User.findOne({ username: user });
 
-            const allMessages: string[] = (await getMessages()).map(
-                (each) => each.message
+            const allMessages: sendMessage[] = (await getMessages()).map(
+                (each) => {
+                    return {
+                        message: each.message,
+                        username: each.username,
+                    } as sendMessage;
+                }
             );
             socket.emit("all-msg", allMessages);
 
@@ -33,7 +43,11 @@ export async function io_setup(io: Server) {
             const foundUser = await User.findOne({ username: msg.person });
 
             if (foundUser) {
-                await createMessage(foundUser._id, msg.message);
+                await createMessage(
+                    foundUser._id,
+                    msg.message,
+                    foundUser.username
+                );
                 io.emit("msg", { message: msg.message, username: msg.person });
             }
         });
