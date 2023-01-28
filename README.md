@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="https://res.cloudinary.com/kyodo/image/upload/v1673968570/kyodo/icons/Logo_jlsedv.png" alt="logo" width="200" height="auto" />
+  <img src="https://res.cloudinary.com/kyodo/image/upload/v1674571454/kyodo/icons/logo_dj9gkd.png" alt="logo" width="200" height="auto" />
   <h1>Kyodo's Backend</h1>
   
   <p>
