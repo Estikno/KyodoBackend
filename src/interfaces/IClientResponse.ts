@@ -1,3 +1,5 @@
+import {Schema} from 'mongoose';
+
 export default interface IClientResponse {
     status: boolean;
     message: string;
@@ -11,4 +13,5 @@ export interface IUserResponse {
     email: string;
     avatarUrl: string;
     verified: boolean;
+    idRoom?: string;
 }

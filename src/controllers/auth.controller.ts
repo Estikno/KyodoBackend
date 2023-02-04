@@ -37,7 +37,7 @@ export async function register(req: Request, res: Response): Promise<Response> {
 
     //email verification
     const verification_token: string = createToken(newUser.username);
-    sendVerificationEmail(newUser.email, `http://localhost:3000/email-confirm/${verification_token}`, newUser.username);
+    sendVerificationEmail(newUser.email, `http://localhost:5173/email-confirm/${verification_token}`, newUser.username);
 
     return res.json({message: 'User created', status: true, token: token} as IClientResponse);
 }
@@ -91,7 +91,7 @@ export async function verification(req: Request, res: Response): Promise<Respons
 
     try{
         const {id} = jwt.verify(token, config.JWT_SECRET as string) as IJwt;
-        await User.findOneAndUpdate({username: id}, {verified: true})
+        await User.findOneAndUpdate({username: id}, {email_verified: true} as IUser)
         return res.json({message: "Token verified", status: true} as IClientResponse);
     }
     catch(err){
@@ -105,5 +105,5 @@ export async function verifiedUser(req: Request, res: Response): Promise<Respons
 
     if(!_user) return res.json({message: "User not found", status: false} as IClientResponse);
 
-    return res.json({message: "User verified", status: true, user: {verified: _user.verified}} as IClientResponse)
+    return res.json({message: "User verified", status: true, user: {verified: _user.email_verified}} as IClientResponse)
 }

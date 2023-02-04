@@ -2,10 +2,20 @@ import { Server, Socket } from "socket.io";
 import User from "./models/User";
 import { createMessage, getMessages } from "./utils/message.util";
 import { IUserResponse } from "./interfaces/IClientResponse";
+import { Schema } from "mongoose";
 
-interface sendMessage {
+interface ISendMessage {
     message: string;
     username: string;
+    id_room: string;
+    id_message: string;
+}
+
+interface IRecieveMessage {
+    person: string;
+    message: string;
+    username_to: string;
+    id_room: string;
 }
 
 export async function io_setup(io: Server) {
@@ -15,17 +25,19 @@ export async function io_setup(io: Server) {
         socket.on("add-user", async (user) => {
             const newUser = await User.findOne({ username: user });
 
-            const allMessages: sendMessage[] = (await getMessages()).map(
+            const allMessages: ISendMessage[] = (await getMessages()).map(
                 (each) => {
                     return {
                         message: each.message,
                         username: each.username,
-                    } as sendMessage;
+                        id_room: each.idRoom.toString(),
+                        id_message: each._id,
+                    } as ISendMessage;
                 }
             );
             socket.emit("all-msg", allMessages);
 
-            if (connectedUsers.get(user)) return;
+            /*if (connectedUsers.get(user)) return;
             if (!newUser) return;
 
             connectedUsers.set(user, socket.id);
@@ -34,21 +46,31 @@ export async function io_setup(io: Server) {
                 avatarUrl: newUser.avatarImage.avatarImageUrl,
                 email: newUser.email,
                 username: newUser.username,
-                verified: newUser.verified,
+                verified: newUser.email_verified,
             };
-            socket.broadcast.emit("new-usr", newUserResponse);
+            socket.broadcast.emit("new-usr", newUserResponse);*/
         });
 
-        socket.on("send-msg", async (msg) => {
+        socket.on("send-msg", async (msg: IRecieveMessage) => {
             const foundUser = await User.findOne({ username: msg.person });
 
             if (foundUser) {
-                await createMessage(
+                const message = await createMessage(
                     foundUser._id,
                     msg.message,
-                    foundUser.username
+                    foundUser.username,
+                    msg.username_to,
+                    msg.id_room
                 );
-                io.emit("msg", { message: msg.message, username: msg.person });
+
+                if (message) {
+                    io.emit("msg", {
+                        message: msg.message,
+                        username: msg.person,
+                        id_room: msg.id_room,
+                        id_message: message.id,
+                    } as ISendMessage);
+                }
             }
         });
     });

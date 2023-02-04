@@ -1,13 +1,11 @@
 import { Schema, model, Document } from "mongoose";
 
-export interface IMessage extends Document {
+export interface IRoomUser extends Document {
     idUser: Schema.Types.ObjectId;
     idRoom: Schema.Types.ObjectId;
-    username: string;
-    message: string;
 }
 
-const MessageSchema = new Schema(
+const RoomUserSchema = new Schema(
     {
         idUser: {
             type: Schema.Types.ObjectId,
@@ -19,14 +17,6 @@ const MessageSchema = new Schema(
             required: true,
             ref: "Room",
         },
-        username: {
-            type: String,
-            require: true
-        },
-        message: {
-            type: String,
-            default: "",
-        },
     },
     {
         timestamps: true,
@@ -34,4 +24,4 @@ const MessageSchema = new Schema(
     }
 );
 
-export default model<IMessage>("Message", MessageSchema);
+export default model<IRoomUser>("RoomUser", RoomUserSchema);

@@ -13,8 +13,10 @@ router.post('/register', authController.register);
 
 router.post('/login', authController.login);
 
+//Email verification
 router.get('/verification/:token', authController.verification);
 
+//se if the user's email is verified
 router.get('/verifiedUser', verifyToken, authController.verifiedUser);
 
 /**
