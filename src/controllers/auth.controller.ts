@@ -42,6 +42,36 @@ export async function register(req: Request, res: Response): Promise<Response> {
     return res.json({message: 'User created', status: true, token: token} as IClientResponse);
 }
 
+export async function registerGraphql(username: String, password: String, email: String): Promise<IClientResponse> {
+    if(!username || !password || !email) {
+        return {
+            message: 'Missing fields',
+            status: false
+        } as IClientResponse;
+    }
+
+    const userCheck = await User.findOne({username: username});
+    const emailCheck = await User.findOne({email: email});
+
+    if(userCheck || emailCheck) {
+        return {
+            message: 'User already exists. Email or passowrd is repeated',
+            status: false
+        } as IClientResponse;
+    }
+
+    const newUser = new User({username, password, email});
+    await newUser.save();
+
+    const token: string = createToken(newUser._id);
+
+    //email verification
+    //const verification_token: string = createToken(newUser.username);
+    //sendVerificationEmail(newUser.email, `http://localhost:5173/email-confirm/${verification_token}`, newUser.username);
+
+    return {message: 'User created', status: true, token: token} as IClientResponse;
+}
+
 /**
  * This function logs the user in and returns the user if the credentials are correct
  */

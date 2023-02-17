@@ -2,13 +2,15 @@ import express, { Application } from "express";
 import morgan from "morgan";
 import cors from "cors";
 import config from "./config";
-import {Server} from 'http';
+import { Server } from "http";
+import { expressMiddleware } from "@apollo/server/express4";
+import { ApolloServer } from "@apollo/server";
 
 //routes
 import userRouter from "./routes/user.routes";
 import authRouter from "./routes/auth.routes";
 import profileRouter from "./routes/profile.routes";
-import adminRouter from './routes/admin.routes';
+import adminRouter from "./routes/admin.routes";
 
 class App {
     private app: Application; //! Do not give public access to the app object
@@ -35,6 +37,11 @@ class App {
         this.app.use("/auth", authRouter);
         this.app.use("/profile", profileRouter);
         this.app.use("/admin", adminRouter);
+    }
+
+    public async startGraphqlRoute(server: ApolloServer): Promise<void> {
+        await server.start();
+        this.app.use("/graphql", expressMiddleware(server));
     }
 
     public listen(httpServer: Server): void {
