@@ -3,10 +3,12 @@ import { gql } from "graphql-tag";
 export default gql`
     type Query {
         hello: String
+        verifySessionGraphql(token: String): IClientResponse
     }
 
     type Mutation {
         register(username: String, password: String, email: String) : IClientResponse
+        login(username: String, password: String) : IClientResponse
     }
 
     type IClientResponse {

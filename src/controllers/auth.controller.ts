@@ -108,12 +108,52 @@ export async function login(req: Request, res: Response): Promise<Response> {
     return res.json({message: 'Logged in', status: true, token: token} as IClientResponse);
 }
 
+export async function loginGraphql(username: String, password: String): Promise<IClientResponse> {
+
+    if(!username || !password) {
+        return {
+            message: 'Missing fields',
+            status: false
+        } as IClientResponse;
+    }
+
+    const userCheck = await User.findOne({username: username});
+
+    if(!userCheck) {
+        return {
+            message: 'Incorrect username or password',
+            status: false
+        } as IClientResponse;
+    }
+
+    const isPasswordCorrect = await userCheck.comparePassword(password.toString());
+
+    if(!isPasswordCorrect){
+        return {
+            message: 'Incorrect username or password',
+            status: false
+        } as IClientResponse;
+    }
+
+    const token: string = createToken(userCheck._id);
+
+    return {message: 'Logged in', status: true, token: token} as IClientResponse;
+}
+
 export function verifySession(req: Request, res: Response): Response{
     const token: string = req.headers["token"] as string;
 
     if(!token || token === "") return res.json({message: "Token is necessary", status: false} as IClientResponse);
 
     return res.json({message: "Token verified", status: verifyToken(token)} as IClientResponse);
+}
+
+export function verifySessionGraphql(token: String): IClientResponse{
+    const _token: string = token.toString();
+
+    if(!_token || _token === "") return {message: "Token is necessary", status: false} as IClientResponse;
+
+    return {message: "Token verified", status: verifyToken(_token)} as IClientResponse;
 }
 
 export async function verification(req: Request, res: Response): Promise<Response>{
@@ -126,6 +166,17 @@ export async function verification(req: Request, res: Response): Promise<Respons
     }
     catch(err){
         return res.json({message: "Token is invalid", status: false} as IClientResponse);
+    }
+}
+
+export async function verificationGraphql(token: String): Promise<IClientResponse>{
+    try{
+        const {id} = jwt.verify(token.toString(), config.JWT_SECRET as string) as IJwt;
+        await User.findOneAndUpdate({username: id}, {email_verified: true} as IUser)
+        return {message: "Token verified", status: true} as IClientResponse;
+    }
+    catch(err){
+        return {message: "Token is invalid", status: false} as IClientResponse;
     }
 }
 
