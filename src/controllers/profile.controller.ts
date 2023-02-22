@@ -3,6 +3,7 @@ import { uploadImage, deleteImage } from "../utils/cloudinary";
 import fs from "fs-extra";
 import User, { IUser } from "../models/User";
 import config from "../config";
+import { verifyTokenGraphql } from "../middlewares/authJwt";
 
 //interfaces
 import { CChangePassword } from "../interfaces/IUsersInterfaces";
@@ -114,6 +115,45 @@ export async function changePassword(
     } as IClientResponse);
 }
 
+export async function changePasswordGraphql(
+    oldPassword: string,
+    newPassword: string,
+    token: String
+): Promise<IClientResponse> {
+    const user_id = verifyTokenGraphql(token);
+
+    if (!oldPassword || !newPassword) {
+        return {
+            message: "Missing passwords",
+            status: false,
+        } as IClientResponse;
+    }
+
+    const founduser = await User.findById(user_id);
+
+    if (!founduser) {
+        return {
+            message: "User not found",
+            status: false,
+        } as IClientResponse;
+    }
+
+    if (!(await founduser.comparePassword(oldPassword))) {
+        return {
+            message: "Old password is incorrect",
+            status: false,
+        } as IClientResponse;
+    }
+
+    founduser.password = newPassword;
+    const user = await founduser.save();
+
+    return {
+        status: true,
+        message: "Password changed",
+    } as IClientResponse;
+}
+
 export async function removeAvatar(
     req: Request,
     res: Response
@@ -161,4 +201,52 @@ export async function removeAvatar(
         message: "Avatar removed successfully",
         status: true,
     } as IClientResponse);
+}
+
+export async function removeAvatarGraphql(
+    token: String
+): Promise<IClientResponse> {
+    const user_id = verifyTokenGraphql(token);
+    if (user_id === null)
+        return {
+            message: "Something went wrong with the token",
+            status: false,
+        } as IClientResponse;
+
+    const foundUser = await User.findById(user_id);
+
+    if (!foundUser) {
+        return {
+            message: "User not found",
+            status: false,
+        } as IClientResponse;
+    }
+
+    //the user is already with the default avatar
+    if (foundUser.avatarImage.avatarImagePublicId === "") {
+        return {
+            message: "Already with the default avatar",
+            status: false,
+        } as IClientResponse;
+    }
+
+    await deleteImage(foundUser.avatarImage.avatarImagePublicId);
+
+    if (!config.DEFAULT_AVATAR_URL)
+        return {
+            message: "Default avatar url is not set",
+            status: false,
+        } as IClientResponse;
+
+    foundUser.avatarImage = {
+        avatarImageUrl: config.DEFAULT_AVATAR_URL,
+        avatarImagePublicId: "",
+    };
+
+    await foundUser.save();
+
+    return {
+        message: "Avatar removed successfully",
+        status: true,
+    } as IClientResponse;
 }

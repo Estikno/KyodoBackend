@@ -13,13 +13,13 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
 
     req.body.user_id = getTokenContent(token);
     next();
+}
 
-    /*try {
-        const decoded = jwt.verify(token, config.JWT_SECRET as string) as IJwt; //the decoded token will be an _id of an user
-        req.body.user_id = decoded.id;
+export function verifyTokenGraphql(token: String): string | null {
+    const _token = token.toString();
 
-        next();
-    } catch (error) {
-        return res.json({ message: "Invalid token", status: false });
-    }*/
+    if (!_token) return null;
+    if(!vf(_token)) return null;
+
+    return getTokenContent(_token);
 }

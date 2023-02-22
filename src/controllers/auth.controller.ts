@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 import User, {IUser} from '../models/User';
 import IClientResponse from '../interfaces/IClientResponse';
 import {createToken, verifyToken} from '../utils/jwt';
+import {verifyTokenGraphql} from '../middlewares/authJwt';
 import {sendVerificationEmail} from '../utils/email';
 import jwt from "jsonwebtoken";
 import config from "../config";
@@ -162,7 +163,7 @@ export async function verification(req: Request, res: Response): Promise<Respons
     try{
         const {id} = jwt.verify(token, config.JWT_SECRET as string) as IJwt;
         await User.findOneAndUpdate({username: id}, {email_verified: true} as IUser)
-        return res.json({message: "Token verified", status: true} as IClientResponse);
+        return res.json({message: "Email verified", status: true} as IClientResponse);
     }
     catch(err){
         return res.json({message: "Token is invalid", status: false} as IClientResponse);
@@ -173,7 +174,7 @@ export async function verificationGraphql(token: String): Promise<IClientRespons
     try{
         const {id} = jwt.verify(token.toString(), config.JWT_SECRET as string) as IJwt;
         await User.findOneAndUpdate({username: id}, {email_verified: true} as IUser)
-        return {message: "Token verified", status: true} as IClientResponse;
+        return {message: "Email verified", status: true} as IClientResponse;
     }
     catch(err){
         return {message: "Token is invalid", status: false} as IClientResponse;
@@ -187,4 +188,16 @@ export async function verifiedUser(req: Request, res: Response): Promise<Respons
     if(!_user) return res.json({message: "User not found", status: false} as IClientResponse);
 
     return res.json({message: "User verified", status: true, user: {verified: _user.email_verified}} as IClientResponse)
+}
+
+export async function verifiedUserGraphql(token: String): Promise<IClientResponse> {
+    const user_id = verifyTokenGraphql(token);
+
+    if(user_id === null) return {message: "Something went wrong with the token", status: false} as IClientResponse;
+
+    const _user: IUser | null = await User.findById(user_id);
+
+    if(!_user) return {message: "User not found", status: false} as IClientResponse;
+
+    return {message: "User verified", status: true, user: [{verified: _user.email_verified}]} as IClientResponse
 }
