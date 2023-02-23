@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import {getTokenContent, verifyToken as vf} from '../utils/jwt';
 import IClientResponse from '../interfaces/IClientResponse';
 
+//rest api method
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
     const token = req.headers["token"] as string;
 
@@ -15,6 +16,7 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
+//graphql api method
 export function verifyTokenGraphql(token: String): string | null {
     const _token = token.toString();
 

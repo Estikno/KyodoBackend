@@ -4,6 +4,8 @@ export default gql`
     type Query {
         verifySession(token: String!): IClientResponse
         verifiedUser(token: String!): IClientResponse
+        getUsers(token: String!): IClientResponse
+        getUser(token: String!, username: String!): IClientResponse
     }
 
     type Mutation {
@@ -25,7 +27,7 @@ export default gql`
     type User {
         username: String
         email: String
-        avatarImageUrl: String
+        avatarUrl: String
         verified: Boolean
     }
 `;

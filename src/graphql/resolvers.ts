@@ -9,6 +9,7 @@ import {
     removeAvatarGraphql,
     changePasswordGraphql,
 } from "../controllers/profile.controller";
+import {getUsersGraphql, getUserGraphql} from '../controllers/user.controller';
 
 export default {
     Query: {
@@ -18,6 +19,12 @@ export default {
         verifiedUser: async (_: any, { token }: { token: String }) => {
             return await verifiedUserGraphql(token);
         },
+        getUsers: async (_: any, { token }: { token: String }) => {
+            return await getUsersGraphql(token);
+        },
+        getUser: async  (_: any, { token, username }: { token: String, username: String }) => {
+            return await getUserGraphql(token, username);
+        }
     },
 
     Mutation: {
