@@ -189,7 +189,10 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
     } as IClientResponse);
 }
 
-export async function getUserGraphql(token: String, username: String): Promise<IClientResponse> {
+export async function getUserGraphql(
+    token: String,
+    username: String
+): Promise<IClientResponse> {
     const user_id = verifyTokenGraphql(token);
 
     if (!user_id) {
@@ -208,7 +211,9 @@ export async function getUserGraphql(token: String, username: String): Promise<I
         } as IClientResponse;
     }
 
-    const foundUser: IUser | null = await User.findOne({username: username.toString()});
+    const foundUser: IUser | null = await User.findOne({
+        username: username.toString(),
+    });
 
     if (!foundUser) {
         return {
@@ -228,7 +233,7 @@ export async function getUserGraphql(token: String, username: String): Promise<I
         user: checkedUser,
         message: "User found",
         status: true,
-    } as IClientResponse
+    } as IClientResponse;
 }
 
 /**
@@ -268,6 +273,43 @@ export async function updateUser(
         message: "User updated",
         status: true,
     } as IClientResponse);
+}
+
+export async function updateUserGraphql(
+    token: String,
+    updateInfo: IUser
+): Promise<IClientResponse> {
+    const user_id = verifyTokenGraphql(token);
+
+    if (!user_id) {
+        return {
+            message: "Token not valable or not provided",
+            status: false,
+        } as IClientResponse;
+    }
+
+    if (!updateInfo) {
+        return {
+            message: "The body is missing",
+            status: false,
+        } as IClientResponse;
+    }
+
+    const foundUser: IUser | null = await User.findById(user_id);
+
+    if (!foundUser) {
+        return {
+            message: "User not found",
+            status: false,
+        } as IClientResponse;
+    }
+
+    await User.findByIdAndUpdate(user_id, updateInfo);
+
+    return {
+        message: "User updated",
+        status: true,
+    } as IClientResponse;
 }
 
 export async function deleteUser(

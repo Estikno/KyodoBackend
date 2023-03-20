@@ -35,6 +35,7 @@ export async function io_setup(io: Server) {
                     } as ISendMessage;
                 }
             );
+
             socket.emit("all-msg", allMessages);
 
             /*if (connectedUsers.get(user)) return;
