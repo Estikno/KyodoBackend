@@ -304,7 +304,18 @@ export async function updateUserGraphql(
         } as IClientResponse;
     }
 
-    await User.findByIdAndUpdate(user_id, updateInfo);
+    //await foundUser.updateOne(updateInfo);
+    
+    if(updateInfo.username !== undefined || updateInfo.username !== null) {
+        foundUser.username = updateInfo.username;
+    }
+
+    if(updateInfo.email !== undefined || updateInfo.email !== null) {
+        foundUser.email = updateInfo.email;
+        foundUser.email_verified = false;
+    }
+
+    await foundUser.save();
 
     return {
         message: "User updated",
