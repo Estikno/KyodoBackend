@@ -115,6 +115,13 @@ export async function changePassword(
     } as IClientResponse);
 }
 
+/**
+ * Changes the user's password to a new one
+ * @param oldPassword the user's old password
+ * @param newPassword the user's new password
+ * @param token the session's token
+ * @returns Response with message and the status
+ */
 export async function changePasswordGraphql(
     oldPassword: string,
     newPassword: string,
@@ -203,6 +210,11 @@ export async function removeAvatar(
     } as IClientResponse);
 }
 
+/**
+ * Deletes the user's avatar to use the default one and also removes the image from the cloud
+ * @param token the session's token
+ * @returns Response with message and status
+ */
 export async function removeAvatarGraphql(
     token: String
 ): Promise<IClientResponse> {

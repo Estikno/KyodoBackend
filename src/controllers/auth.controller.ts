@@ -9,7 +9,7 @@ import config from "../config";
 import IJwt from "../interfaces/IJWT";
 
 /**
- * This function registers the user and creates a new user in the database
+ * * This function registers the user and creates a new user in the database
  */
 export async function register(req: Request, res: Response): Promise<Response> {
     const { username, password, email } = req.body;
@@ -51,6 +51,13 @@ export async function register(req: Request, res: Response): Promise<Response> {
     } as IClientResponse);
 }
 
+/**
+ * Same as register method but for graphql
+ * @param username the user's username
+ * @param password the user's password
+ * @param email the user's email address
+ * @returns Response with status, message, token and user information
+ */
 export async function registerGraphql(
     username: String,
     password: String,
@@ -90,7 +97,7 @@ export async function registerGraphql(
 }
 
 /**
- * This function logs the user in and returns the user if the credentials are correct
+ * * This function logs the user in and returns the user if the credentials are correct
  */
 export async function login(req: Request, res: Response): Promise<Response> {
     const { username, password } = req.body;
@@ -129,6 +136,13 @@ export async function login(req: Request, res: Response): Promise<Response> {
     } as IClientResponse);
 }
 
+
+/**
+ * Same as login method but for graphql
+ * @param username the user's username
+ * @param password the user's password
+ * @returns Response with status, message, token and user information
+ */
 export async function loginGraphql(
     username: String,
     password: String
@@ -184,6 +198,11 @@ export function verifySession(req: Request, res: Response): Response {
     } as IClientResponse);
 }
 
+/**
+ * Sees if the token provided is valid
+ * @param token the current session`s token
+ * @returns Response with status and message
+ */
 export function verifySessionGraphql(token: String): IClientResponse {
     const _token: string = token.toString();
 
@@ -222,6 +241,12 @@ export async function verification(
     }
 }
 
+
+/**
+ * Changes the email's verification parameter to true
+ * @param token the session's token
+ * @returns Response with status and message
+ */
 export async function verificationGraphql(
     token: String
 ): Promise<IClientResponse> {
@@ -262,6 +287,12 @@ export async function verifiedUser(
     } as IClientResponse);
 }
 
+
+/**
+ * Sees if the session's token is valid
+ * @param token the session's token
+ * @returns Response with message, status and the user's information
+ */
 export async function verifiedUserGraphql(
     token: String
 ): Promise<IClientResponse> {

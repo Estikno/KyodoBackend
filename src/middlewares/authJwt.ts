@@ -16,7 +16,11 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
-//graphql api method
+/**
+ * Sees if the token is valid and if it is returns its content
+ * @param token the session's token
+ * @returns token content
+ */
 export function verifyTokenGraphql(token: String): string | null {
     const _token = token.toString();
 
