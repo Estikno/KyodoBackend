@@ -18,6 +18,10 @@ interface IRecieveMessage {
     id_room: string;
 }
 
+/**
+ * Sets up the required functionality for the socket connections needed for the chat
+ * @param io the io server to use
+ */
 export async function io_setup(io: Server) {
     const connectedUsers: Map<string, string> = new Map();
 

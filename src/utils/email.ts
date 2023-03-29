@@ -1,6 +1,12 @@
 import nodemailer from "nodemailer";
 import transporter from "../emailCon";
 
+/**
+ * Sends a verification email to a specified email address with a link to verify the email.
+ * @param emailTo who to send the email to
+ * @param verificationLink verification's link
+ * @param name the name of the person to send the email
+ */
 export function sendVerificationEmail(
     emailTo: string,
     verificationLink: string,

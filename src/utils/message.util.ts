@@ -3,6 +3,15 @@ import Room, { IRoom } from "../models/Room";
 import RoomUser, { IRoomUser } from "../models/RoomUser";
 import User, { IUser } from "../models/User";
 
+/**
+ * Creates a new message and stores it in the database
+ * @param idUser A string representing the ID of the user who is sending the message
+ * @param message A string representing the message content
+ * @param username A string representing the username of the user who is sending the message
+ * @param username_to A string representing the username of the user who the message is being sent to
+ * @param id_room A string representing the ID of the chat room where the message is being sent
+ * @returns Promise that resolves to an IMessage object if a new message was successfully created, or undefined if the user_to is not found in the database
+ */
 export async function createMessage(
     idUser: string,
     message: string,
@@ -70,6 +79,10 @@ export async function createMessage(
     return newMessage;
 }
 
+/**
+ * Retrieves all messages from the database
+ * @returns Array of messages
+ */
 export async function getMessages(): Promise<IMessage[]> {
     return await Message.find();
 }

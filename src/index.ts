@@ -18,8 +18,8 @@ const apollo = new ApolloServer({
 });
 
 //configure the application
-app.config();
-app.routes();
+//app.config();
+//app.routes();
 app.startGraphqlRoute(apollo);
 
 //start application

@@ -1,5 +1,8 @@
 import RoomType, { IRoomType } from "../models/RoomType";
 
+/**
+ * This function creates two new room types ("private" and "public") in a database collection called RoomType, but only if there are no existing room types in the collection.
+ */
 export default async function () {
     const allRoomTypes = await RoomType.find();
 

@@ -86,6 +86,11 @@ export async function getUsers(req: Request, res: Response): Promise<Response> {
     } as IClientResponse);
 }
 
+/**
+ * Gets a list of all users except the logged-in user
+ * @param token the session's token
+ * @returns It returns an object containing a message, a boolean status, and an array of user objects with their details and optionally, room IDs.
+ */
 export async function getUsersGraphql(token: String): Promise<IClientResponse> {
     const user_id = verifyTokenGraphql(token);
 
@@ -189,6 +194,12 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
     } as IClientResponse);
 }
 
+/**
+ * This function retrieves the user's details by their username
+ * @param token the session's token
+ * @param username the user's username
+ * @returns Response with message, status, the user's username, email and avatar URL
+ */
 export async function getUserGraphql(
     token: String,
     username: String
@@ -275,6 +286,12 @@ export async function updateUser(
     } as IClientResponse);
 }
 
+/**
+ * This function updates a user's information
+ * @param token the session's token
+ * @param updateInfo an object with updated information
+ * @returns An object containing a message indicating if the update was successful, along with a boolean status
+ */
 export async function updateUserGraphql(
     token: String,
     updateInfo: IUser
@@ -305,12 +322,12 @@ export async function updateUserGraphql(
     }
 
     //await foundUser.updateOne(updateInfo);
-    
-    if(updateInfo.username !== undefined || updateInfo.username !== null) {
+
+    if (updateInfo.username !== undefined || updateInfo.username !== null) {
         foundUser.username = updateInfo.username;
     }
 
-    if(updateInfo.email !== undefined || updateInfo.email !== null) {
+    if (updateInfo.email !== undefined || updateInfo.email !== null) {
         foundUser.email = updateInfo.email;
         foundUser.email_verified = false;
     }
