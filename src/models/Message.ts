@@ -7,6 +7,7 @@ export interface IMessage extends Document {
     message: string;
 }
 
+
 const MessageSchema = new Schema(
     {
         idUser: {
