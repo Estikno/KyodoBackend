@@ -11,6 +11,12 @@ import { UploadedFile } from "express-fileupload";
 import { UploadApiOptions, UploadApiResponse } from "cloudinary";
 import IClientResponse from "../interfaces/IClientResponse";
 
+/**
+ * Updates the user's avatar with a new one
+ * @param req the request object
+ * @param res the response object
+ * @returns Response with message and status
+ */
 export async function changeAvatar(
     req: Request,
     res: Response
@@ -258,7 +264,7 @@ export async function removeAvatarGraphql(
     await foundUser.save();
 
     return {
-        message: "Avatar removed successfully",
+        message: "Avatar removed successfully. Reload the page to see the changes",
         status: true,
     } as IClientResponse;
 }
