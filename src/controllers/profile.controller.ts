@@ -159,7 +159,7 @@ export async function changePasswordGraphql(
     }
 
     founduser.password = newPassword;
-    const user = await founduser.save();
+    await founduser.save();
 
     return {
         status: true,
@@ -225,6 +225,7 @@ export async function removeAvatarGraphql(
     token: String
 ): Promise<IClientResponse> {
     const user_id = verifyTokenGraphql(token);
+    
     if (user_id === null)
         return {
             message: "Something went wrong with the token",

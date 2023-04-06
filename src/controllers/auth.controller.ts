@@ -75,7 +75,7 @@ export async function registerGraphql(
 
     if (userCheck || emailCheck) {
         return {
-            message: "User already exists. Email or passowrd is repeated",
+            message: "User already exists. Email or user is repeated",
             status: false,
         } as IClientResponse;
     }
@@ -289,7 +289,7 @@ export async function verifiedUser(
 
 
 /**
- * Sees if the session's token is valid
+ * Sees if the session token is valid and that the user attached to it exists
  * @param token the session's token
  * @returns Response with message, status and the user's information
  */
