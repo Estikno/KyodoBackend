@@ -188,7 +188,7 @@ export async function getUser(req: Request, res: Response): Promise<Response> {
     };
 
     return res.json({
-        user: checkedUser,
+        user: [checkedUser],
         message: "User found",
         status: true,
     } as IClientResponse);
@@ -228,7 +228,7 @@ export async function getUserGraphql(
 
     if (!foundUser) {
         return {
-            message: "Not valid token",
+            message: "Not valid username",
             status: false,
         } as IClientResponse;
     }
@@ -241,7 +241,7 @@ export async function getUserGraphql(
     };
 
     return {
-        user: checkedUser,
+        user: [checkedUser],
         message: "User found",
         status: true,
     } as IClientResponse;
@@ -287,14 +287,14 @@ export async function updateUser(
 }
 
 /**
- * This function updates a user's information
+ * This function updates a user's information, this only updates the usernames and email addresses
  * @param token the session's token
  * @param updateInfo an object with updated information
  * @returns An object containing a message indicating if the update was successful, along with a boolean status
  */
 export async function updateUserGraphql(
     token: String,
-    updateInfo: IUser
+    updateInfo: { username: string; email: string }
 ): Promise<IClientResponse> {
     const user_id = verifyTokenGraphql(token);
 
@@ -323,11 +323,11 @@ export async function updateUserGraphql(
 
     //await foundUser.updateOne(updateInfo);
 
-    if (updateInfo.username !== undefined || updateInfo.username !== null) {
+    if (updateInfo.username !== undefined && updateInfo.username !== null && updateInfo.username !== "") {
         foundUser.username = updateInfo.username;
     }
 
-    if (updateInfo.email !== undefined || updateInfo.email !== null) {
+    if (updateInfo.email !== undefined && updateInfo.email !== null && updateInfo.email !== "") {
         foundUser.email = updateInfo.email;
         foundUser.email_verified = false;
     }

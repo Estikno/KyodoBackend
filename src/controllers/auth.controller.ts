@@ -267,7 +267,7 @@ export async function verificationGraphql(
     }
 }
 
-export async function verifiedUser(
+/*export async function verifiedUser(
     req: Request,
     res: Response
 ): Promise<Response> {
@@ -285,7 +285,7 @@ export async function verifiedUser(
         status: true,
         user: { verified: _user.email_verified },
     } as IClientResponse);
-}
+}*/
 
 
 /**

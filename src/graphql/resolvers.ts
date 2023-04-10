@@ -12,7 +12,7 @@ import {
 import {
     getUsersGraphql,
     getUserGraphql,
-    updateUserGraphql
+    updateUserGraphql,
 } from "../controllers/user.controller";
 import { IUser } from "../models/User";
 
@@ -74,9 +74,15 @@ export default {
         },
         updateUser: async (
             _: any,
-            { token, updateUser }: { token: String; updateUser: IUser }
+            {
+                token,
+                updateUser,
+            }: {
+                token: String;
+                updateUser: { username: string; email: string };
+            }
         ) => {
-            return await updateUserGraphql(token, updateUser as IUser);
+            return await updateUserGraphql(token, updateUser);
         },
     },
 };

@@ -4,7 +4,7 @@ export default interface IClientResponse {
     status: boolean;
     message: string;
     token?: string;
-    user?: IUserResponse | IUserResponse[];
+    user?: IUserResponse[];
     room?: string;
 }
 
