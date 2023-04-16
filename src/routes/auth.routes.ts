@@ -17,7 +17,7 @@ router.post('/login', authController.login);
 router.get('/verification/:token', authController.verification);
 
 //se if the user's email is verified
-router.get('/verifiedUser', verifyToken, authController.verifiedUser);
+//router.get('/verifiedUser', verifyToken, authController.verifiedUser);
 
 /**
  * this route will be called by the client whenever the user is trying to go to a protected route
