@@ -29,7 +29,6 @@ export async function createMessage(
     if(id_room === "1"){
         const newRoom = new Room({ idType: "63d6c6f6c3f41b356dab2fd1" });
         
-        console.log("no room created")
         await newRoom.save();
 
         await new RoomUser({ idUser: idUser, idRoom: newRoom.id }).save();
@@ -41,6 +40,7 @@ export async function createMessage(
             username: username,
             message: message,
         });
+
         await newMessage.save();
         return newMessage;
     }
@@ -75,6 +75,7 @@ export async function createMessage(
         username: username,
         message: message,
     });
+    
     await newMessage.save();
     return newMessage;
 }

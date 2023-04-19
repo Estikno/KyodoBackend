@@ -69,6 +69,15 @@ export async function io_setup(io: Server) {
                 );
 
                 if (message) {
+                    //the id room has been updated
+                    if (message.idRoom.toString() != msg.id_room) {
+                        io.emit("update-idroom", {
+                            user1: foundUser.username,
+                            user2: msg.username_to,
+                            idRoom: message.idRoom.toString(),
+                        });
+                    }
+
                     io.emit("msg", {
                         message: msg.message,
                         username: msg.person,
