@@ -118,10 +118,10 @@ export async function getUsersGraphql(token: String): Promise<IClientResponse> {
             let _id: string = "";
 
             const roomUser1: IRoomUser[] = await RoomUser.find({
-                idUser: user.id,
+                idUser: user._id,
             });
             const roomUser2: IRoomUser[] = await RoomUser.find({
-                idUser: actualUser.id,
+                idUser: actualUser._id,
             });
 
             if (roomUser1.length === 0 || roomUser2.length === 0) {
@@ -130,17 +130,25 @@ export async function getUsersGraphql(token: String): Promise<IClientResponse> {
                     email: user.email,
                     avatarUrl: user.avatarImage.avatarImageUrl,
                     verified: user.email_verified,
+                    idRoom: _id
                 });
                 continue;
             }
 
-            roomUser1.map((roomUser, index) => {
-                if (
-                    roomUser.idRoom.toString() ===
-                    roomUser2[index].idRoom.toString()
-                ) {
-                    _id = roomUser.idRoom.toString();
-                }
+            roomUser1.map((roomUser) => {
+                roomUser2.map((anotherRoomUser) => {
+                    if(roomUser.idRoom.toString() === anotherRoomUser.idRoom.toString()){
+                        _id = roomUser.idRoom.toString();
+                    }
+                });
+            });
+
+            roomUser2.map((roomUser) => {
+                roomUser1.map((anotherRoomUser) => {
+                    if(roomUser.idRoom.toString() === anotherRoomUser.idRoom.toString()){
+                        _id = roomUser.idRoom.toString();
+                    }
+                });
             });
 
             returningUsers.push({
@@ -323,11 +331,19 @@ export async function updateUserGraphql(
 
     //await foundUser.updateOne(updateInfo);
 
-    if (updateInfo.username !== undefined && updateInfo.username !== null && updateInfo.username !== "") {
+    if (
+        updateInfo.username !== undefined &&
+        updateInfo.username !== null &&
+        updateInfo.username !== ""
+    ) {
         foundUser.username = updateInfo.username;
     }
 
-    if (updateInfo.email !== undefined && updateInfo.email !== null && updateInfo.email !== "") {
+    if (
+        updateInfo.email !== undefined &&
+        updateInfo.email !== null &&
+        updateInfo.email !== ""
+    ) {
         foundUser.email = updateInfo.email;
         foundUser.email_verified = false;
     }

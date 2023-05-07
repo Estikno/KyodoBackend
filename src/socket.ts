@@ -1,8 +1,10 @@
 import { Server, Socket } from "socket.io";
 import User from "./models/User";
 import { createMessage, getMessages } from "./utils/message.util";
+import { createToken } from "./utils/jwt";
 import { IUserResponse } from "./interfaces/IClientResponse";
 import { Schema } from "mongoose";
+import { getUsersGraphql } from "./controllers/user.controller";
 
 interface ISendMessage {
     message: string;
@@ -17,6 +19,8 @@ interface IRecieveMessage {
     username_to: string;
     id_room: string;
 }
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /**
  * Sets up the required functionality for the socket connections needed for the chat
@@ -69,21 +73,35 @@ export async function io_setup(io: Server) {
                 );
 
                 if (message) {
-                    //the id room has been updated
-                    if (message.idRoom.toString() != msg.id_room) {
-                        io.emit("update-idroom", {
-                            user1: foundUser.username,
-                            user2: msg.username_to,
-                            idRoom: message.idRoom.toString(),
-                        });
-                    }
-
                     io.emit("msg", {
                         message: msg.message,
                         username: msg.person,
-                        id_room: msg.id_room,
+                        id_room: message.idRoom.toString(),
                         id_message: message.id,
+                        update: message.idRoom.toString() !== msg.id_room,
                     } as ISendMessage);
+
+                    if (message.idRoom.toString() !== msg.id_room) {
+                        const foundUser2 = await User.findOne({
+                            username: msg.username_to,
+                        });
+
+                        if (!foundUser2) return console.log("not found user");
+
+                        const users = await getUsersGraphql(
+                            createToken(foundUser.id)
+                        );
+                        const users2 = await getUsersGraphql(
+                            createToken(foundUser2.id)
+                        );
+
+                        io.emit("update", {
+                            user1: foundUser.username,
+                            user2: foundUser2.username,
+                            users1: users.user,
+                            users2: users2.user,
+                        });
+                    }
                 }
             }
         });

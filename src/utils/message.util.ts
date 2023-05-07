@@ -25,14 +25,14 @@ export async function createMessage(
     let defIdRoom: string = id_room;
 
     if (!user_to) return undefined;
-    
-    if(id_room === "1"){
+
+    if (id_room === "1") {
         const newRoom = new Room({ idType: "63d6c6f6c3f41b356dab2fd1" });
-        
+
         await newRoom.save();
 
         await new RoomUser({ idUser: idUser, idRoom: newRoom.id }).save();
-        await new RoomUser({ idUser: user_to._id, idRoom: newRoom.id }).save();
+        await new RoomUser({ idUser: user_to.id, idRoom: newRoom.id }).save();
 
         const newMessage = new Message({
             idUser: idUser,
@@ -42,6 +42,7 @@ export async function createMessage(
         });
 
         await newMessage.save();
+        console.log("create new room");
         return newMessage;
     }
 
@@ -54,20 +55,11 @@ export async function createMessage(
         idRoom: id_room,
     });
 
-    if (!roomUser1 && !roomUser2) {
-        //no room created
-        const newRoom = new Room({ idType: "63d6c6f6c3f41b356dab2fd1" });
-        await newRoom.save();
-
-        await new RoomUser({ idUser: idUser, idRoom: newRoom.id }).save();
-        await new RoomUser({ idUser: user_to._id, idRoom: newRoom.id }).save();
-
-        defIdRoom = newRoom._id;
-    } else if (!roomUser1) {
+    if (!roomUser1)
         await new RoomUser({ idUser: idUser, idRoom: id_room }).save();
-    } else if (!roomUser2) {
+
+    if (!roomUser2)
         await new RoomUser({ idUser: user_to._id, idRoom: id_room }).save();
-    }
 
     const newMessage = new Message({
         idUser: idUser,
@@ -75,7 +67,7 @@ export async function createMessage(
         username: username,
         message: message,
     });
-    
+
     await newMessage.save();
     return newMessage;
 }
