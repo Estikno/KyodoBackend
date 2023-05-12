@@ -113,41 +113,41 @@ It's important to mention that this backend is designed to work with the officia
 <!-- Env Variables -->
 ### :key: Environment Variables
 
-To run this project, you will need to add the following environment variables to your .env file
+To run this project, you will need to have the following environment variables setted up
 
-`CLOUD_NAME`
+`CLOUD_NAME` : Stores the name of the cloud folder of Cloudinary
 
-`CLOUD_API_KEY`
+`CLOUD_API_KEY` : Stores the API key of Cloudinary
 
-`CLOUD_API_SECRET`
+`CLOUD_API_SECRET` : Stores the API secret key to access Cloudinary
 
-`DEFAULT_AVATAR_URL`
+`DEFAULT_AVATAR_URL` : Stores the URL of a default avatar image
 
-`PORT`
+`PORT` : The port number on which the application runs and listens for incoming requests
 
-`BCRYPT_SALT_NUM`
+`BCRYPT_SALT_NUM` : The number of salt rounds used in bcrypt password hashing to ensure secure password storage
 
-`MONGO_HOST`
+`MONGO_HOST` : The hostname or IP address of the MongoDB server that the application connects to.
 
-`MONGO_PASSWORD`
+`MONGO_PASSWORD` : The password required to authenticate the application's connection to the MongoDB server
 
-`MONGO_USER`
+`MONGO_USER` : The username required to authenticate the application's connection to the MongoDB server
 
-`MONGO_DATABASE`
+`MONGO_DATABASE` : The name of the MongoDB database that the application connects to
 
-`MONGO_PORT`
+`MONGO_PORT` : The port number on which the MongoDB server is listening for incoming connections
 
-`JWT_SECRET`
+`JWT_SECRET`: The secret key used to sign and verify JSON Web Tokens (JWTs) issued by the application
 
-`JWT_DURATION`
+`JWT_DURATION` : The duration for which JWTs issued by the application will remain valid
 
-`EMAIL_USER`
+`EMAIL_USER` : The email address that the application uses to send email verification links
 
-`EMAIL_PASSWORD`
+`EMAIL_PASSWORD` : The password required to authenticate the application's connection to the email server
 
-`EMAIL_PASSWORD_APP`
+`EMAIL_PASSWORD_APP` : The password required by the application to use an email service provider's API to send email notifications
 
-`ADMIN_PASSWORD`
+`ADMIN_PASSWORD` : The password for the administrator account in the application, used for administrative tasks and access to sensitive areas of the application (Not in use for now)
 
 <!-- Getting Started -->
 ## 	:toolbox: Getting Started
@@ -189,19 +189,91 @@ To run the project locally simply excecute the following command on a terminal i
 <!-- Deployment -->
 ### :triangular_flag_on_post: Deployment
 
-To deploy this project to a linux sever simply run the following command
+To deploy this project to a linux sever simply follow these steps. It's importanto to say that theese steps apply to debian linux distros, however it's a global deployment method
+so you can adapt the commands shown and it will work perfectly.
 
-:bangbang: Note that you will need to have all the deployment dependecies if not this script will lead to errors
+It's also important to mention that there is a script called `deploy.sh` in the project files which does this whole process automaticaly, but it's not finished yet. So use it
+on your own risk.
 
-```bash
-  ./deploy.sh
-```
-
-On another hand, if you want to delete everithing that the above command did, simply excecute this one
+1. First update the respositories
 
 ```bash
-  ./delete.sh
+  sudo apt update
 ```
+
+:bangbang: You will need to have installed nvm for you to install nodejs more easily, so go to their github page [here](https://github.com/nvm-sh/nvm) and follow the steps install it.
+
+2. Now simply run these commands to install the latest version of Nodejs
+
+```bash
+  nvm install node
+```
+
+3. The following command will install Pm2, which is needed for the deployment
+
+```bash
+  npm install pm2 -g
+```
+
+4. Nginx is also necessary, so lets install it
+
+```bash
+  sudo apt install -y nginx
+```
+
+5. Now simply get in the folder and install the dependencies and build the project
+
+```bash
+  npm i
+  npm run build
+```
+
+6. This command will start the server using pm2
+
+```bash
+  pm2 start build/index.js --name kyodo-backend
+```
+
+7. Configure Nginx to reverse proxy requests to your Node.js application
+
+```bash
+  sudo apt install nginx
+  sudo nano /etc/nginx/sites-available/default
+```
+
+8. Add the following configuration to the Nginx default site file
+
+```bash
+  server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://localhost:4758;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+  }
+```
+
+9. Verify the Nginx configuration syntax and restart the Nginx service
+
+```bash
+  sudo nginx -t
+  sudo systemctl restart nginx
+```
+
+10. Configure PM2 to automatically start your application on server boot
+
+```bash
+  pm2 startup systemd
+  pm2 save
+```
+
+That's it! Now the server is up and running perfectly.
 
 <!-- Contributing -->
 ## :wave: Contributing
