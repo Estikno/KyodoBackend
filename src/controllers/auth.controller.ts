@@ -80,7 +80,7 @@ export async function registerGraphql(
         } as IClientResponse;
     }
 
-    const newUser = new User({ username, password, email });
+    const newUser = new User({ username, password, email, email_verified: true });
     await newUser.save();
 
     const token: string = createToken(newUser._id);
