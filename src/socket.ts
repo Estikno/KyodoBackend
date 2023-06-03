@@ -1,10 +1,10 @@
 import { Server, Socket } from "socket.io";
-import User from "./models/User";
 import { createMessage, getMessages } from "./utils/message.util";
 import { createToken } from "./utils/jwt";
 import { IUserResponse } from "./interfaces/IClientResponse";
 import { Schema } from "mongoose";
 import { getUsersGraphql } from "./controllers/user.controller";
+import User, { IUser } from "./models/User";
 
 interface ISendMessage {
     message: string;
@@ -30,7 +30,7 @@ export async function io_setup(io: Server) {
     const connectedUsers: Map<string, string> = new Map();
 
     io.on("connection", (socket: Socket) => {
-        socket.on("add-user", async (user) => {
+        socket.on("add-user", async (user: string) => {
             const newUser = await User.findOne({ username: user });
 
             const allMessages: ISendMessage[] = (await getMessages()).map(
@@ -46,6 +46,11 @@ export async function io_setup(io: Server) {
 
             socket.emit("all-msg", allMessages);
 
+            if (!connectedUsers.has(user)) {
+                connectedUsers.set(user, socket.id);
+                socket.broadcast.emit("add-connected-user", user);
+            }
+
             /*if (connectedUsers.get(user)) return;
             if (!newUser) return;
 
@@ -58,6 +63,23 @@ export async function io_setup(io: Server) {
                 verified: newUser.email_verified,
             };
             socket.broadcast.emit("new-usr", newUserResponse);*/
+        });
+
+        socket.on("connected-users", async (username: string) => {
+            let connectedNow: { username: string; connected: boolean }[] = [];
+
+            const allUsers: IUser[] = await User.find();
+
+            allUsers.forEach((user) => {
+                if (user.username !== username) {
+                    connectedNow.push({
+                        username: user.username,
+                        connected: connectedUsers.has(user.username),
+                    });
+                }
+            });
+
+            socket.emit("connected-now", connectedNow);
         });
 
         socket.on("send-msg", async (msg: IRecieveMessage) => {
@@ -104,6 +126,19 @@ export async function io_setup(io: Server) {
                     }
                 }
             }
+        });
+
+        socket.on("disconnect", () => {
+            let usernameDelete: string = "";
+
+            connectedUsers.forEach((id, username) => {
+                if (id == socket.id) {
+                    usernameDelete = username;
+                }
+            });
+
+            connectedUsers.delete(usernameDelete);
+            socket.broadcast.emit("off-connected-user", usernameDelete);
         });
     });
 }
