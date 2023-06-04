@@ -3,7 +3,7 @@ import User, { IUser } from "../models/User";
 import IClientResponse from "../interfaces/IClientResponse";
 import { createToken, verifyToken } from "../utils/jwt";
 import { verifyTokenGraphql } from "../middlewares/authJwt";
-import { sendVerificationEmail } from "../utils/email";
+//import { sendVerificationEmail } from "../utils/email";
 import jwt from "jsonwebtoken";
 import config from "../config";
 import IJwt from "../interfaces/IJWT";
@@ -38,11 +38,11 @@ export async function register(req: Request, res: Response): Promise<Response> {
 
     //email verification
     const verification_token: string = createToken(newUser.username);
-    sendVerificationEmail(
+    /*sendVerificationEmail(
         newUser.email,
         `http://localhost:5173/email-confirm/${verification_token}`,
         newUser.username
-    );
+    );*/
 
     return res.json({
         message: "User created",
