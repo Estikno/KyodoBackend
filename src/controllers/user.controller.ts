@@ -115,7 +115,7 @@ export async function getUsersGraphql(token: String): Promise<IClientResponse> {
 
     for (const user of allUsers) {
         if (user.username !== actualUser.username) {
-            let _id: string = "";
+            /*let _id: string = "";
 
             const roomUser1: IRoomUser[] = await RoomUser.find({
                 idUser: user._id,
@@ -149,14 +149,14 @@ export async function getUsersGraphql(token: String): Promise<IClientResponse> {
                         _id = roomUser.idRoom.toString();
                     }
                 });
-            });
+            });*/
 
             returningUsers.push({
                 username: user.username,
                 email: user.email,
                 avatarUrl: user.avatarImage.avatarImageUrl,
                 verified: user.email_verified,
-                idRoom: _id,
+                idRoom: await getRoomIdFromTwoUsers(user.id, actualUser.id),
             });
         }
     }

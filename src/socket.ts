@@ -5,6 +5,7 @@ import { IUserResponse } from "./interfaces/IClientResponse";
 import { Schema } from "mongoose";
 import { getUsersGraphql } from "./controllers/user.controller";
 import User, { IUser } from "./models/User";
+import { getRoomIdFromTwoUsers } from "./utils/roomUser";
 
 interface ISendMessage {
     message: string;
@@ -46,24 +47,45 @@ export async function io_setup(io: Server) {
 
             socket.emit("all-msg", allMessages);
 
+            if (!newUser) return;
+
             if (!connectedUsers.has(user)) {
                 connectedUsers.set(user, socket.id);
                 socket.broadcast.emit("add-connected-user", user);
             }
 
-            /*if (connectedUsers.get(user)) return;
-            if (!newUser) return;
+            connectedUsers.forEach(async (id, username) => {
+                const otherUser = await User.findOne({ username: username });
 
-            connectedUsers.set(user, socket.id);
+                if (otherUser && id !== socket.id) {
+                    const newUserResponse: IUserResponse = {
+                        avatarUrl: newUser.avatarImage.avatarImageUrl,
+                        email: newUser.email,
+                        username: newUser.username,
+                        verified: newUser.email_verified,
+                        idRoom: await getRoomIdFromTwoUsers(
+                            newUser.id,
+                            otherUser.id
+                        ),
+                    };
 
-            const newUserResponse: IUserResponse = {
-                avatarUrl: newUser.avatarImage.avatarImageUrl,
-                email: newUser.email,
-                username: newUser.username,
-                verified: newUser.email_verified,
-            };
-            socket.broadcast.emit("new-usr", newUserResponse);*/
+                    io.to(id).emit("new-usr", newUserResponse);
+                }
+            });
         });
+
+        /*socket.on("manual_disconnect", (username: string) => {
+            let usernameDelete: string = "";
+
+            connectedUsers.forEach((id, username) => {
+                if (id == socket.id) {
+                    usernameDelete = username;
+                }
+            });
+
+            connectedUsers.delete(usernameDelete);
+            socket.broadcast.emit("off-connected-user", usernameDelete);
+        });*/
 
         socket.on("connected-users", async (username: string) => {
             let connectedNow: { username: string; connected: boolean }[] = [];

@@ -10,23 +10,29 @@ import { Schema } from "mongoose";
 export async function getRoomIdFromTwoUsers(
     idUser1: string,
     idUser2: string
-): Promise<Schema.Types.ObjectId | undefined> {
+): Promise<string> {
     const roomUser1: IRoomUser[] = await RoomUser.find({ idUser: idUser1 });
     const roomUser2: IRoomUser[] = await RoomUser.find({ idUser: idUser2 });
 
-    if (roomUser1.length === 0 || roomUser2.length === 0) return undefined;
+    let _id: string = "";
 
-    /*roomUser1.map((roomUser, index) => {
-        if (roomUser.idRoom.toString() === roomUser2[index].idRoom.toString()) {
-            return roomUser.idRoom;
-        }
-    });*/
+    if (roomUser1.length === 0 || roomUser2.length === 0) return _id;
 
-    for (let index = 0; index < roomUser1.length; index++) {
-        if (roomUser1[index].idRoom.toString() === roomUser2[index].idRoom.toString()) {
-            return roomUser1[index].idRoom;
-        }
-    }
+    roomUser1.map((roomUser) => {
+        roomUser2.map((anotherRoomUser) => {
+            if(roomUser.idRoom.toString() === anotherRoomUser.idRoom.toString()){
+                _id = roomUser.idRoom.toString();
+            }
+        });
+    });
 
-    return undefined;
+    roomUser2.map((roomUser) => {
+        roomUser1.map((anotherRoomUser) => {
+            if(roomUser.idRoom.toString() === anotherRoomUser.idRoom.toString()){
+                _id = roomUser.idRoom.toString();
+            }
+        });
+    });
+
+    return _id;
 }
