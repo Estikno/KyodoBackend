@@ -59,9 +59,7 @@
 <!-- About the Project -->
 ## :star2: About the Project
 
-Welcome to the kyodo backend, a crucial part of the Kyodo's app! Our backend is designed to provide a reliable and scalable infrastructure for your chat platform. We've built our backend with the latest technologies and industry best practices to ensure that you always have a fast and responsive chat experience, no matter how many users you have.
-
-One of the key features of our backend is its flexibility and extensibility. We've designed our backend to be easily customizable, allowing you to add new features and functionality as your needs evolve. Additionally, our backend is designed to be self-hosted, giving you complete control over your data and allowing you to maintain the highest level of privacy and security.
+Welcome to the kyodo backend, a crucial part of the Kyodo's app! Our backend is designed to provide a reliable and scalable infrastructure for your chat platform. We've built our backend with the latest technologies and industry best practices to ensure that you always have a fast and responsive chat experience, no matter how many users you have
 
 It's important to mention that this backend is designed to work with the official kyodo frontend, however you can create your own frontend and use this backend if needed.
 
