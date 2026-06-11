@@ -4,7 +4,7 @@
   <h1>Kyodo's Backend</h1>
   
   <p>
-    The official Kyodo backend you can host on your own system. (curretly discontinued)
+    The Kyodo backend you can host on your own system. (curretly discontinued)
   </p>
   
   
@@ -58,10 +58,6 @@
 
 <!-- About the Project -->
 ## :star2: About the Project
-
-Welcome to the kyodo backend, a crucial part of the Kyodo's app! Our backend is designed to provide a reliable and scalable infrastructure for your chat platform. We've built our backend with the latest technologies and industry best practices to ensure that you always have a fast and responsive chat experience, no matter how many users you have
-
-It's important to mention that this backend is designed to work with the official kyodo frontend, however you can create your own frontend and use this backend if needed.
 
 <!-- Screenshots -->
 ### :camera: Screenshots
@@ -187,7 +183,7 @@ To run the project locally simply excecute the following command on a terminal i
 <!-- Deployment -->
 ### :triangular_flag_on_post: Deployment
 
-To deploy this project to a linux sever simply follow these steps. It's importanto to say that theese steps apply to debian linux distros, however it's a global deployment method
+To deploy this project to a linux sever simply follow these steps. It's important to say that theese steps apply to debian linux distros, however it's a global deployment method
 so you can adapt the commands shown and it will work perfectly.
 
 It's also important to mention that there is a script called `deploy.sh` in the project files which does this whole process automaticaly, but it's not finished yet. So use it
@@ -272,18 +268,6 @@ on your own risk.
 ```
 
 That's it! Now the server is up and running perfectly.
-
-<!-- Contributing -->
-## :wave: Contributing
-
-<a href="https://github.com/Estiknok/KyodoBackend/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Estiknok/KyodoBackend" />
-</a>
-
-
-Contributions are always welcome!
-
-See `contributing.md` for ways to get started.
 
 <!-- License -->
 ## :warning: License
